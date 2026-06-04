@@ -1,6 +1,6 @@
-# SE Interview Prep
+# CodeQuest
 
-A single-page, interactive software engineering interview prep guide.
+A single-page, interactive software engineering interview prep guide. Your quest to ace the interview, one topic at a time.
 
 **Live:** _add link after hosting_
 
