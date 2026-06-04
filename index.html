@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>CodeQuest — SE Interview Prep</title>
 <style>
 :root{
@@ -99,6 +102,32 @@ li{margin:4px 0}
 svg{display:block;max-width:100%}
 footer{text-align:center;padding:30px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
 .kbd{background:var(--panel2);border:1px solid var(--border);padding:1px 6px;border-radius:4px;font-family:monospace;font-size:11px;color:var(--muted)}
+
+
+/* ===== Topic dashboard grid ===== */
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:18px 0 28px}
+.topic-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;transition:transform .15s ease,border-color .15s ease,background .15s ease,box-shadow .15s ease;text-align:left;color:var(--text);display:block;width:100%;font-family:inherit;position:relative;overflow:hidden}
+.topic-card::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,92,255,.12),rgba(34,211,238,.08));opacity:0;transition:opacity .2s ease;pointer-events:none}
+.topic-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.topic-card:hover::before{opacity:1}
+.topic-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.topic-card .ti{font-size:26px;display:block;margin-bottom:6px;line-height:1;position:relative}
+.topic-card .tn{font-size:14px;font-weight:700;margin:0 0 4px;color:var(--text);position:relative}
+.topic-card .td{font-size:12px;color:var(--muted);line-height:1.45;margin:0;position:relative}
+.topic-arrow{position:absolute;top:14px;right:14px;color:var(--muted);font-size:14px;opacity:.5;transition:.2s}
+.topic-card:hover .topic-arrow{color:var(--accent);opacity:1;transform:translateX(3px)}
+
+@media (max-width:900px){
+  .topic-grid{grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0 22px}
+  .topic-card{padding:13px}
+  .topic-card .ti{font-size:22px;margin-bottom:4px}
+  .topic-card .tn{font-size:13px}
+  .topic-card .td{font-size:11px}
+  .topic-arrow{display:none}
+}
+@media (max-width:380px){
+  .topic-grid{grid-template-columns:1fr}
+}
 
 /* ===== Mobile / responsive ===== */
 .hamburger{display:none;background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:7px 12px;border-radius:8px;cursor:pointer;font-size:18px;line-height:1}
@@ -244,6 +273,10 @@ CONTENT.home = `
     <li><strong>Q&amp;A</strong> — common interview questions with answers</li>
   </ul>
 </div>
+
+<h2>Pick a topic</h2>
+<p style="color:var(--muted);font-size:14px;margin:-4px 0 14px">Tap any card to dive in. Each topic has notes, examples, interactive demos, and Q&amp;A.</p>
+<div class="topic-grid" id="topic-grid"></div>
 
 <h2>What to study first</h2>
 <div class="grid2">
@@ -2883,6 +2916,7 @@ function navigate(key){
   attachCopy();
   window.scrollTo({top:0, behavior:"smooth"});
   // Page-specific bootstrapping
+  if (key === "home") renderTopicGrid();
   if (key === "arrays") arrReset();
   if (key === "linkedlist") llReset();
   if (key === "stackqueue"){ stkReset(); qReset(); }
@@ -3212,6 +3246,45 @@ document.addEventListener("keydown", e => {
 });
 
 
+// ============ TOPIC DASHBOARD ============
+const TOPIC_DESC = {
+  bigo: "Big-O notation, complexity classes, how to analyze runtime",
+  arrays: "Operations, two-pointer, sliding window, classic problems",
+  strings: "Anagrams, palindromes, manipulation, immutability",
+  linkedlist: "Singly, doubly, reverse, cycle detection, merge",
+  stackqueue: "LIFO and FIFO, balanced brackets, queue from stacks",
+  trees: "BST, traversals (in / pre / post-order), height, LCA",
+  graphs: "BFS, DFS, Dijkstra, topological sort, representations",
+  hash: "Hash maps, collisions, load factor, two-sum patterns",
+  heaps: "Min and max heap, priority queue, top-K, median stream",
+  sorting: "Bubble, merge, quick, heap — stability and complexity",
+  searching: "Linear, binary, rotated arrays, first/last occurrence",
+  recursion: "Base cases, memoization, DP, backtracking, Fibonacci",
+  oop: "4 pillars: encapsulation, inheritance, polymorphism, abstraction",
+  solid: "5 principles: SRP, OCP, LSP, ISP, DIP — with examples",
+  patterns: "Singleton, Factory, Observer, Strategy, Decorator, more",
+  db: "SQL basics, joins, indexes, transactions, ACID, normalization",
+  sysdesign: "Load balancing, caching, scaling, REST, microservices",
+  git: "Branches, merge vs rebase, undoing, conflicts, stash",
+  web: "HTML, CSS, JS, HTTP, async, DOM, cookies, CORS, closures",
+  general: "150+ common questions across all CS fundamentals",
+  behavioral: "STAR method, common questions, what to ask them"
+};
+function renderTopicGrid(){
+  const g = document.getElementById("topic-grid");
+  if (!g) return;
+  g.innerHTML = "";
+  for (const key in PAGES){
+    if (key === "home") continue;
+    const c = document.createElement("button");
+    c.className = "topic-card";
+    c.dataset.key = key;
+    c.innerHTML = '<span class="topic-arrow">→</span><span class="ti">' + PAGES[key].icon + '</span><div class="tn">' + PAGES[key].title + '</div><p class="td">' + (TOPIC_DESC[key] || "") + '</p>';
+    c.onclick = () => navigate(key);
+    g.appendChild(c);
+  }
+}
+
 // ============ DRAWER / MOBILE NAV ============
 const DRAWER = document.getElementById("drawer");
 const DRAWER_BG = document.getElementById("drawer-bg");
@@ -3228,9 +3301,11 @@ function closeDrawer(){
   DRAWER.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
 }
-document.getElementById("hamburger").onclick = openDrawer;
-document.getElementById("drawer-close").onclick = closeDrawer;
-DRAWER_BG.onclick = closeDrawer;
+const HAMBURGER = document.getElementById("hamburger");
+const DRAWER_CLOSE = document.getElementById("drawer-close");
+if (HAMBURGER) HAMBURGER.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); openDrawer(); });
+if (DRAWER_CLOSE) DRAWER_CLOSE.addEventListener("click", closeDrawer);
+if (DRAWER_BG) DRAWER_BG.addEventListener("click", closeDrawer);
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
 
 // populate drawer with same topics
