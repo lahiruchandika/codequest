@@ -1,0 +1,3147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SE Entry-Level Interview Prep</title>
+<style>
+:root{
+  --bg:#0f1115; --panel:#171a21; --panel2:#1d212b; --border:#2a2f3a;
+  --text:#e6e8ee; --muted:#9aa3b2; --accent:#7c5cff; --accent2:#22d3ee;
+  --ok:#22c55e; --warn:#f59e0b; --err:#ef4444; --code:#0b0d12;
+}
+[data-theme="light"]{
+  --bg:#f7f8fb; --panel:#ffffff; --panel2:#f0f2f7; --border:#dfe3eb;
+  --text:#1b1f27; --muted:#5b6577; --accent:#6440ff; --accent2:#0ea5e9;
+  --code:#f3f5fa;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{position:sticky;top:0;z-index:100;background:var(--panel);border-bottom:1px solid var(--border);backdrop-filter:blur(10px)}
+.hwrap{max-width:1400px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:18px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+nav.topnav{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+nav.topnav button{background:transparent;border:1px solid transparent;color:var(--muted);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:13px}
+nav.topnav button:hover{color:var(--text);background:var(--panel2)}
+nav.topnav button.active{color:var(--text);background:var(--panel2);border-color:var(--border)}
+.toolbar{display:flex;gap:8px}
+.toolbar button{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:8px;cursor:pointer;font-size:12px}
+.layout{max-width:1400px;margin:0 auto;padding:24px;display:grid;grid-template-columns:240px 1fr;gap:24px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}}
+aside{position:sticky;top:80px;height:fit-content;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px}
+aside h4{margin:6px 0 10px;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+aside a{display:block;padding:7px 10px;color:var(--muted);text-decoration:none;border-radius:6px;font-size:13px;border-left:2px solid transparent}
+aside a:hover{color:var(--text);background:var(--panel2)}
+aside a.active{color:var(--text);background:var(--panel2);border-left-color:var(--accent)}
+main{min-width:0}
+.page{display:none}
+.page.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+h1{font-size:32px;margin:0 0 6px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:22px;margin:32px 0 10px;border-bottom:1px solid var(--border);padding-bottom:8px}
+h3{font-size:17px;margin:20px 0 8px;color:var(--text)}
+p,li{color:var(--text)}
+.lead{color:var(--muted);font-size:15px;margin-bottom:20px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px;margin:14px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}}
+.tag{display:inline-block;background:var(--panel2);border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:6px;font-size:11px;margin-right:4px}
+code{background:var(--code);padding:2px 6px;border-radius:4px;font-family:"SF Mono",Monaco,Consolas,monospace;font-size:13px}
+pre{background:var(--code);border:1px solid var(--border);border-radius:8px;padding:14px;overflow-x:auto;font-size:13px;line-height:1.5;position:relative}
+pre code{background:transparent;padding:0}
+.copy{position:absolute;top:8px;right:8px;background:var(--panel2);border:1px solid var(--border);color:var(--muted);padding:3px 8px;border-radius:6px;font-size:11px;cursor:pointer}
+.copy:hover{color:var(--text)}
+.k{color:#c792ea}.s{color:#c3e88d}.n{color:#f78c6c}.c{color:#546e7a;font-style:italic}.f{color:#82aaff}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:var(--panel2);color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+.qa{background:var(--panel);border:1px solid var(--border);border-radius:8px;margin:8px 0;overflow:hidden}
+.qa summary{padding:12px 16px;cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:"+";color:var(--accent);font-size:20px;transition:.2s}
+.qa[open] summary::after{transform:rotate(45deg)}
+.qa summary:hover{background:var(--panel2)}
+.qa-body{padding:0 16px 14px;color:var(--muted)}
+.qa-body p{color:var(--muted)}
+.viz{background:var(--code);border:1px solid var(--border);border-radius:8px;padding:16px;margin:12px 0}
+.viz-controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.viz-controls input,.viz-controls button{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-size:13px}
+.viz-controls button{cursor:pointer;background:var(--accent);color:white;border-color:var(--accent);font-weight:600}
+.viz-controls button:hover{opacity:.9}
+.viz-controls button.sec{background:var(--panel2);color:var(--text);border-color:var(--border);font-weight:400}
+.array-box{display:flex;gap:4px;flex-wrap:wrap;min-height:50px;align-items:center}
+.cell{min-width:42px;height:42px;background:var(--panel);border:2px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:600;position:relative;transition:.2s}
+.cell.hi{background:var(--accent);color:white;border-color:var(--accent)}
+.cell.ok{background:var(--ok);color:white;border-color:var(--ok)}
+.cell .idx{position:absolute;bottom:-18px;font-size:10px;color:var(--muted);font-weight:400}
+.runner{background:var(--code);border:1px solid var(--border);border-radius:8px;margin:12px 0;overflow:hidden}
+.runner textarea{width:100%;min-height:140px;background:transparent;color:var(--text);border:none;padding:12px;font-family:"SF Mono",Monaco,monospace;font-size:13px;resize:vertical;outline:none}
+.runner .rbar{display:flex;justify-content:space-between;padding:8px 12px;background:var(--panel2);border-top:1px solid var(--border)}
+.runner button{background:var(--accent);color:white;border:none;padding:5px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600}
+.runner .out{padding:10px 12px;background:#000;color:#0f0;font-family:monospace;font-size:12px;min-height:30px;white-space:pre-wrap;border-top:1px solid var(--border)}
+.banner{background:linear-gradient(135deg,rgba(124,92,255,.1),rgba(34,211,238,.1));border:1px solid var(--accent);border-radius:12px;padding:20px;margin:20px 0}
+.note{background:rgba(245,158,11,.08);border-left:3px solid var(--warn);padding:10px 14px;margin:10px 0;border-radius:0 6px 6px 0;font-size:14px}
+.tip{background:rgba(34,197,94,.08);border-left:3px solid var(--ok);padding:10px 14px;margin:10px 0;border-radius:0 6px 6px 0;font-size:14px}
+.warn{background:rgba(239,68,68,.08);border-left:3px solid var(--err);padding:10px 14px;margin:10px 0;border-radius:0 6px 6px 0;font-size:14px}
+ul,ol{padding-left:22px}
+li{margin:4px 0}
+.quiz{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px;margin:12px 0}
+.quiz .opts{display:grid;gap:6px;margin-top:10px}
+.quiz .opt{padding:9px 12px;background:var(--panel2);border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:14px}
+.quiz .opt:hover{border-color:var(--accent)}
+.quiz .opt.correct{background:rgba(34,197,94,.15);border-color:var(--ok)}
+.quiz .opt.wrong{background:rgba(239,68,68,.15);border-color:var(--err)}
+.quiz .expl{margin-top:10px;padding:10px;background:var(--code);border-radius:6px;font-size:13px;color:var(--muted);display:none}
+.quiz.answered .expl{display:block}
+.bigo-bar{display:flex;align-items:center;gap:8px;margin:4px 0;font-size:13px}
+.bigo-bar .lbl{width:90px;font-family:monospace}
+.bigo-bar .bar{height:18px;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px}
+svg{display:block;max-width:100%}
+footer{text-align:center;padding:30px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
+.kbd{background:var(--panel2);border:1px solid var(--border);padding:1px 6px;border-radius:4px;font-family:monospace;font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <div class="logo">&lt;/&gt; SE Interview Prep</div>
+    <nav class="topnav" id="topnav"></nav>
+    <div class="toolbar">
+      <button onclick="toggleTheme()">Theme</button>
+      <button onclick="showRandomQ()">Random Q</button>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <aside id="sidebar">
+    <h4>On this page</h4>
+    <div id="sidebar-links"></div>
+  </aside>
+
+  <main id="main"></main>
+</div>
+
+<footer>Built for entry-level SE prep · Arrays · DS · OOP · Patterns · System Design · Q&amp;A · <span class="kbd">Press /</span> to focus search</footer>
+
+<script>
+// ============ DATA: PAGES ============
+const PAGES = {
+  home: { title: "Overview", icon: "🏠" },
+  bigo: { title: "Big-O", icon: "📊" },
+  arrays: { title: "Arrays", icon: "📦" },
+  strings: { title: "Strings", icon: "🔤" },
+  linkedlist: { title: "Linked Lists", icon: "🔗" },
+  stackqueue: { title: "Stack & Queue", icon: "📚" },
+  trees: { title: "Trees", icon: "🌳" },
+  graphs: { title: "Graphs", icon: "🕸️" },
+  hash: { title: "Hash Tables", icon: "🔑" },
+  heaps: { title: "Heaps", icon: "⛰️" },
+  sorting: { title: "Sorting", icon: "🔀" },
+  searching: { title: "Searching", icon: "🔍" },
+  recursion: { title: "Recursion & DP", icon: "♻️" },
+  oop: { title: "OOP", icon: "🧱" },
+  solid: { title: "SOLID", icon: "💎" },
+  patterns: { title: "Design Patterns", icon: "🎨" },
+  db: { title: "Database & SQL", icon: "🗄️" },
+  sysdesign: { title: "System Design", icon: "🏗️" },
+  git: { title: "Git", icon: "🌿" },
+  web: { title: "Web Basics", icon: "🌐" },
+  general: { title: "General Q&A", icon: "❓" },
+  behavioral: { title: "Behavioral", icon: "🗣️" }
+};
+
+const CONTENT = {};
+</script>
+
+<script>
+// ============ PAGE: HOME ============
+CONTENT.home = `
+<h1>SE Entry-Level Interview Prep</h1>
+<p class="lead">Everything you need for your first software engineering interview — concepts, examples, interactive demos, and Q&amp;A. Click a topic in the header to jump in.</p>
+
+<div class="banner">
+  <h3 style="margin-top:0">How to use this guide</h3>
+  <ul>
+    <li><strong>Concepts</strong> — read short, focused explanations</li>
+    <li><strong>Code examples</strong> — runnable JavaScript snippets you can edit</li>
+    <li><strong>Visualizers</strong> — see arrays, lists, trees, sorting animate</li>
+    <li><strong>Quizzes</strong> — test understanding with multiple choice</li>
+    <li><strong>Q&amp;A</strong> — common interview questions with answers</li>
+  </ul>
+</div>
+
+<h2>What to study first</h2>
+<div class="grid2">
+  <div class="card">
+    <h3>Core (must know)</h3>
+    <ul>
+      <li>Big-O notation</li>
+      <li>Arrays &amp; Strings</li>
+      <li>Hash Tables</li>
+      <li>Linked Lists</li>
+      <li>Stacks &amp; Queues</li>
+      <li>Trees (BST, traversals)</li>
+      <li>Recursion basics</li>
+      <li>Sorting (merge, quick, etc.)</li>
+      <li>Binary search</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Important (should know)</h3>
+    <ul>
+      <li>OOP — 4 pillars</li>
+      <li>SOLID principles</li>
+      <li>Common design patterns</li>
+      <li>SQL basics + joins</li>
+      <li>HTTP / REST</li>
+      <li>Git workflow</li>
+      <li>Graphs (BFS, DFS)</li>
+      <li>Heaps / Priority Queue</li>
+      <li>Dynamic programming basics</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Interview structure (typical)</h2>
+<ol>
+  <li><strong>Intro &amp; CV walk-through</strong> — 5–10 min</li>
+  <li><strong>Technical / coding</strong> — 30–45 min (1–2 problems)</li>
+  <li><strong>CS fundamentals</strong> — DS, OOP, SQL, OS basics</li>
+  <li><strong>Behavioral</strong> — teamwork, projects, conflict</li>
+  <li><strong>Your questions to them</strong> — always have 2–3 ready</li>
+</ol>
+
+<h2>Tips that actually help</h2>
+<div class="tip">💡 Always <strong>think out loud</strong>. Interviewers grade your thought process, not just the final code.</div>
+<div class="tip">💡 <strong>Clarify first</strong>. Ask about input size, edge cases (empty, null, duplicates), and constraints before coding.</div>
+<div class="tip">💡 <strong>Brute-force first, then optimize</strong>. Saying "I'd start with O(n²) and improve to O(n log n) by..." shows depth.</div>
+<div class="note">⚠️ Don't go silent. Even if stuck, narrate what you're trying.</div>
+<div class="warn">❌ Never say "I don't know" and stop. Say "I haven't used X, but based on Y, I'd try…"</div>
+`;
+</script>
+
+<script>
+// ============ PAGE: BIG-O ============
+CONTENT.bigo = `
+<h1>Big-O Notation</h1>
+<p class="lead">Big-O describes how an algorithm's runtime or space grows as input size grows. It's the #1 thing interviewers test.</p>
+
+<h2>The common complexities (best → worst)</h2>
+<div class="card">
+  <div class="bigo-bar"><span class="lbl">O(1)</span><div class="bar" style="width:5%"></div><span>Constant — hash lookup, array index</span></div>
+  <div class="bigo-bar"><span class="lbl">O(log n)</span><div class="bar" style="width:12%"></div><span>Logarithmic — binary search, balanced BST</span></div>
+  <div class="bigo-bar"><span class="lbl">O(n)</span><div class="bar" style="width:25%"></div><span>Linear — single loop, linear search</span></div>
+  <div class="bigo-bar"><span class="lbl">O(n log n)</span><div class="bar" style="width:40%"></div><span>Log-linear — merge sort, quicksort avg</span></div>
+  <div class="bigo-bar"><span class="lbl">O(n²)</span><div class="bar" style="width:65%"></div><span>Quadratic — nested loops, bubble sort</span></div>
+  <div class="bigo-bar"><span class="lbl">O(2ⁿ)</span><div class="bar" style="width:88%"></div><span>Exponential — naive recursion (fib)</span></div>
+  <div class="bigo-bar"><span class="lbl">O(n!)</span><div class="bar" style="width:100%"></div><span>Factorial — permutations, brute TSP</span></div>
+</div>
+
+<h2>How to figure out Big-O</h2>
+<ol>
+  <li>Find the <strong>dominant term</strong>. O(n + n²) = O(n²).</li>
+  <li>Drop <strong>constants</strong>. O(2n) = O(n).</li>
+  <li>Different inputs = different variables. Two arrays a, b → O(a + b), not O(n).</li>
+  <li>Nested loops over the <em>same</em> input → multiply. O(n) × O(n) = O(n²).</li>
+</ol>
+
+<h2>Examples</h2>
+<pre><code><span class="c">// O(1) — does not depend on n</span>
+<span class="k">function</span> <span class="f">first</span>(arr){ <span class="k">return</span> arr[<span class="n">0</span>]; }
+
+<span class="c">// O(n) — touches each element once</span>
+<span class="k">function</span> <span class="f">sum</span>(arr){
+  <span class="k">let</span> s = <span class="n">0</span>;
+  <span class="k">for</span> (<span class="k">const</span> x <span class="k">of</span> arr) s += x;
+  <span class="k">return</span> s;
+}
+
+<span class="c">// O(n²) — nested loop over same input</span>
+<span class="k">function</span> <span class="f">pairs</span>(arr){
+  <span class="k">for</span> (<span class="k">let</span> i=<span class="n">0</span>; i&lt;arr.length; i++)
+    <span class="k">for</span> (<span class="k">let</span> j=i+<span class="n">1</span>; j&lt;arr.length; j++)
+      console.log(arr[i], arr[j]);
+}
+
+<span class="c">// O(log n) — halves search space each step</span>
+<span class="k">function</span> <span class="f">binarySearch</span>(arr, target){
+  <span class="k">let</span> lo=<span class="n">0</span>, hi=arr.length-<span class="n">1</span>;
+  <span class="k">while</span> (lo &lt;= hi){
+    <span class="k">const</span> mid = (lo+hi) &gt;&gt; <span class="n">1</span>;
+    <span class="k">if</span> (arr[mid] === target) <span class="k">return</span> mid;
+    arr[mid] &lt; target ? lo=mid+<span class="n">1</span> : hi=mid-<span class="n">1</span>;
+  }
+  <span class="k">return</span> -<span class="n">1</span>;
+}</code></pre>
+
+<h2>Space complexity</h2>
+<p>Same idea but for memory. Recursion uses stack space — recursive fib has O(n) stack depth even though it's O(2ⁿ) time.</p>
+
+<h2>Try it: which Big-O?</h2>
+<div class="quiz" data-correct="1">
+  <strong>Q: What is the time complexity?</strong>
+  <pre style="margin-top:8px"><code>for (let i = 0; i &lt; n; i++)
+  for (let j = 0; j &lt; n; j++)
+    sum += arr[i] * arr[j];</code></pre>
+  <div class="opts">
+    <div class="opt">O(n)</div>
+    <div class="opt">O(n²)</div>
+    <div class="opt">O(log n)</div>
+    <div class="opt">O(2ⁿ)</div>
+  </div>
+  <div class="expl">Two nested loops, each running n times → n × n = n². Each inner operation is O(1).</div>
+</div>
+
+<div class="quiz" data-correct="2">
+  <strong>Q: What is the time complexity?</strong>
+  <pre style="margin-top:8px"><code>let i = 1;
+while (i &lt; n) i *= 2;</code></pre>
+  <div class="opts">
+    <div class="opt">O(n)</div>
+    <div class="opt">O(n²)</div>
+    <div class="opt">O(log n)</div>
+    <div class="opt">O(1)</div>
+  </div>
+  <div class="expl">Doubling i each iteration → it takes log₂(n) steps to reach n. Same pattern as binary search.</div>
+</div>
+
+<h2>Common Q&amp;A</h2>
+<details class="qa"><summary>What's the difference between Big-O, Big-Θ, and Big-Ω?</summary>
+<div class="qa-body">
+<p><strong>Big-O</strong> = upper bound (worst case). <strong>Big-Ω</strong> (Omega) = lower bound (best case). <strong>Big-Θ</strong> (Theta) = tight bound (both). Interviews use Big-O loosely to mean tight worst-case bound.</p>
+</div></details>
+
+<details class="qa"><summary>Is O(2n) the same as O(n)?</summary>
+<div class="qa-body"><p>Yes. Big-O drops constants. 2n grows linearly with n.</p></div></details>
+
+<details class="qa"><summary>What's amortized complexity?</summary>
+<div class="qa-body"><p>Average cost per operation over a sequence. Example: dynamic array <code>push</code> is O(1) amortized — most pushes are O(1), but occasional resizes are O(n). Averaged out: O(1).</p></div></details>
+
+<details class="qa"><summary>What's the time complexity of nested loops where inner depends on outer?</summary>
+<div class="qa-body"><p>Like <code>for i in n: for j in i</code> → 1+2+...+n = n(n+1)/2 = O(n²). Still quadratic.</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: ARRAYS ============
+CONTENT.arrays = `
+<h1>Arrays</h1>
+<p class="lead">Contiguous block of memory storing elements of the same type. Fixed size in low-level languages, dynamic in JS/Python.</p>
+
+<h2>Key operations &amp; complexity</h2>
+<table>
+<tr><th>Operation</th><th>Time</th><th>Why</th></tr>
+<tr><td>Access by index</td><td>O(1)</td><td>Direct memory offset</td></tr>
+<tr><td>Search (unsorted)</td><td>O(n)</td><td>May need to check every element</td></tr>
+<tr><td>Search (sorted)</td><td>O(log n)</td><td>Binary search</td></tr>
+<tr><td>Insert at end (push)</td><td>O(1)*</td><td>Amortized, resize sometimes</td></tr>
+<tr><td>Insert at start/middle</td><td>O(n)</td><td>Must shift elements</td></tr>
+<tr><td>Delete at end (pop)</td><td>O(1)</td><td>No shift needed</td></tr>
+<tr><td>Delete at start/middle</td><td>O(n)</td><td>Must shift elements</td></tr>
+</table>
+
+<h2>Interactive array</h2>
+<div class="viz">
+  <div class="viz-controls">
+    <input id="arr-val" type="text" placeholder="value" style="width:80px">
+    <button onclick="arrPush()">push</button>
+    <button onclick="arrPop()" class="sec">pop</button>
+    <button onclick="arrUnshift()" class="sec">unshift</button>
+    <button onclick="arrShift()" class="sec">shift</button>
+    <button onclick="arrReverse()" class="sec">reverse</button>
+    <button onclick="arrSort()" class="sec">sort</button>
+    <button onclick="arrReset()" class="sec">reset</button>
+  </div>
+  <div class="array-box" id="arr-viz"></div>
+  <p style="color:var(--muted);font-size:12px;margin-top:20px">Last op: <span id="arr-op">—</span></p>
+</div>
+
+<h2>Two-pointer technique</h2>
+<p>Use two indices to traverse from both ends — essential for sorted-array problems.</p>
+<pre><code><span class="c">// Two-sum on a SORTED array — O(n)</span>
+<span class="k">function</span> <span class="f">twoSumSorted</span>(arr, target){
+  <span class="k">let</span> lo=<span class="n">0</span>, hi=arr.length-<span class="n">1</span>;
+  <span class="k">while</span> (lo &lt; hi){
+    <span class="k">const</span> s = arr[lo] + arr[hi];
+    <span class="k">if</span> (s === target) <span class="k">return</span> [lo, hi];
+    s &lt; target ? lo++ : hi--;
+  }
+  <span class="k">return</span> [-<span class="n">1</span>, -<span class="n">1</span>];
+}</code></pre>
+
+<h2>Sliding window</h2>
+<pre><code><span class="c">// Max sum of subarray of size k — O(n)</span>
+<span class="k">function</span> <span class="f">maxSum</span>(arr, k){
+  <span class="k">let</span> sum=<span class="n">0</span>;
+  <span class="k">for</span> (<span class="k">let</span> i=<span class="n">0</span>; i&lt;k; i++) sum += arr[i];
+  <span class="k">let</span> max = sum;
+  <span class="k">for</span> (<span class="k">let</span> i=k; i&lt;arr.length; i++){
+    sum += arr[i] - arr[i-k];
+    max = Math.max(max, sum);
+  }
+  <span class="k">return</span> max;
+}</code></pre>
+
+<h2>Run it yourself</h2>
+<div class="runner">
+  <textarea id="run-arr">// Try modifying this and click Run
+const arr = [3, 1, 4, 1, 5, 9, 2, 6];
+const sorted = [...arr].sort((a,b) =&gt; a-b);
+console.log("original:", arr);
+console.log("sorted:", sorted);
+console.log("sum:", arr.reduce((a,b) =&gt; a+b, 0));
+console.log("max:", Math.max(...arr));</textarea>
+  <div class="rbar"><span style="color:var(--muted);font-size:12px">JavaScript</span><button onclick="runCode('run-arr','out-arr')">▶ Run</button></div>
+  <div class="out" id="out-arr">// output appears here</div>
+</div>
+
+<h2>Common array problems</h2>
+<details class="qa"><summary>Reverse an array in-place</summary>
+<div class="qa-body"><pre><code>function reverse(arr){
+  let i=0, j=arr.length-1;
+  while (i &lt; j){
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+    i++; j--;
+  }
+}</code></pre></div></details>
+
+<details class="qa"><summary>Find the maximum element</summary>
+<div class="qa-body"><pre><code>function max(arr){
+  let m = arr[0];
+  for (let i=1; i&lt;arr.length; i++)
+    if (arr[i] &gt; m) m = arr[i];
+  return m;
+}</code></pre></div></details>
+
+<details class="qa"><summary>Remove duplicates from sorted array</summary>
+<div class="qa-body"><pre><code>function dedupe(arr){
+  if (!arr.length) return 0;
+  let k=1;
+  for (let i=1; i&lt;arr.length; i++)
+    if (arr[i] !== arr[i-1]) arr[k++] = arr[i];
+  return k; // new length
+}</code></pre></div></details>
+
+<details class="qa"><summary>Move all zeros to the end</summary>
+<div class="qa-body"><pre><code>function moveZeros(arr){
+  let k=0;
+  for (let i=0; i&lt;arr.length; i++)
+    if (arr[i] !== 0) arr[k++] = arr[i];
+  while (k &lt; arr.length) arr[k++] = 0;
+}</code></pre></div></details>
+
+<details class="qa"><summary>Kadane's algorithm — max subarray sum</summary>
+<div class="qa-body"><pre><code>function maxSubarray(arr){
+  let best=arr[0], cur=arr[0];
+  for (let i=1; i&lt;arr.length; i++){
+    cur = Math.max(arr[i], cur+arr[i]);
+    best = Math.max(best, cur);
+  }
+  return best;
+}</code></pre><p>O(n) time, O(1) space. Classic DP interview problem.</p></div></details>
+
+<h2>Interview Q&amp;A</h2>
+<details class="qa"><summary>Difference between array and ArrayList (Java)?</summary>
+<div class="qa-body"><p>Array has fixed size, stores primitives or objects. ArrayList is a dynamic, resizable wrapper around an array — stores objects only (autoboxing for primitives).</p></div></details>
+
+<details class="qa"><summary>How does a dynamic array work internally?</summary>
+<div class="qa-body"><p>It holds a backing array with extra capacity. When full, it allocates a new array (usually 2× size) and copies elements. That's why push is amortized O(1).</p></div></details>
+
+<details class="qa"><summary>Array vs Linked List — when to use which?</summary>
+<div class="qa-body"><p><strong>Array</strong>: fast random access, cache-friendly, fixed/dynamic. Use when you access by index a lot.<br><strong>Linked List</strong>: cheap insert/delete in the middle, no contiguous memory. Use when you insert/delete at arbitrary positions often.</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: STRINGS ============
+CONTENT.strings = `
+<h1>Strings</h1>
+<p class="lead">A sequence of characters. In most languages strings are immutable — modifying creates a new string.</p>
+
+<h2>Key facts</h2>
+<ul>
+  <li>Strings in Java, Python, JavaScript, C# are <strong>immutable</strong></li>
+  <li>Concatenation in loops is O(n²) — use StringBuilder/array+join instead</li>
+  <li>Comparison is O(n) where n is string length</li>
+  <li>Substring usually O(k) where k is substring length</li>
+</ul>
+
+<h2>Common operations (JS)</h2>
+<pre><code><span class="k">const</span> s = <span class="s">"hello world"</span>;
+s.length;            <span class="c">// 11</span>
+s[<span class="n">0</span>];                <span class="c">// "h"</span>
+s.charAt(<span class="n">0</span>);          <span class="c">// "h"</span>
+s.indexOf(<span class="s">"world"</span>);    <span class="c">// 6</span>
+s.includes(<span class="s">"ell"</span>);     <span class="c">// true</span>
+s.slice(<span class="n">0</span>, <span class="n">5</span>);         <span class="c">// "hello"</span>
+s.split(<span class="s">" "</span>);           <span class="c">// ["hello", "world"]</span>
+s.toUpperCase();     <span class="c">// "HELLO WORLD"</span>
+s.replace(<span class="s">"l"</span>, <span class="s">"L"</span>);   <span class="c">// "heLlo world" — only first</span>
+s.replaceAll(<span class="s">"l"</span>,<span class="s">"L"</span>); <span class="c">// "heLLo worLd"</span></code></pre>
+
+<h2>Classic problems</h2>
+
+<h3>1. Is the string a palindrome?</h3>
+<pre><code>function isPalindrome(s){
+  s = s.toLowerCase().replace(/[^a-z0-9]/g, "");
+  let i=0, j=s.length-1;
+  while (i &lt; j){
+    if (s[i] !== s[j]) return false;
+    i++; j--;
+  }
+  return true;
+}</code></pre>
+
+<h3>2. Reverse words in a sentence</h3>
+<pre><code>function reverseWords(s){
+  return s.trim().split(/\\s+/).reverse().join(" ");
+}</code></pre>
+
+<h3>3. Are two strings anagrams?</h3>
+<pre><code>function isAnagram(a, b){
+  if (a.length !== b.length) return false;
+  const count = {};
+  for (const c of a) count[c] = (count[c]||0) + 1;
+  for (const c of b){
+    if (!count[c]) return false;
+    count[c]--;
+  }
+  return true;
+}</code></pre>
+
+<h3>4. First non-repeating character</h3>
+<pre><code>function firstUnique(s){
+  const count = {};
+  for (const c of s) count[c] = (count[c]||0) + 1;
+  for (let i=0; i&lt;s.length; i++)
+    if (count[s[i]] === 1) return i;
+  return -1;
+}</code></pre>
+
+<h3>5. Longest substring without repeating chars (sliding window)</h3>
+<pre><code>function longestUnique(s){
+  const seen = new Map();
+  let best=0, start=0;
+  for (let i=0; i&lt;s.length; i++){
+    if (seen.has(s[i]) &amp;&amp; seen.get(s[i]) &gt;= start)
+      start = seen.get(s[i]) + 1;
+    seen.set(s[i], i);
+    best = Math.max(best, i - start + 1);
+  }
+  return best;
+}</code></pre>
+
+<h2>Try it</h2>
+<div class="runner">
+  <textarea id="run-str">function isAnagram(a, b){
+  if (a.length !== b.length) return false;
+  return [...a].sort().join("") === [...b].sort().join("");
+}
+console.log(isAnagram("listen", "silent"));
+console.log(isAnagram("hello", "world"));</textarea>
+  <div class="rbar"><span style="color:var(--muted);font-size:12px">JavaScript</span><button onclick="runCode('run-str','out-str')">▶ Run</button></div>
+  <div class="out" id="out-str">// output appears here</div>
+</div>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>Why are strings immutable in Java/Python?</summary>
+<div class="qa-body"><p>Safety (no accidental mutation when shared), thread-safety, allows interning/caching (string pool), allows safe use as hash map keys.</p></div></details>
+
+<details class="qa"><summary>Why is concatenation in a loop slow?</summary>
+<div class="qa-body"><p>Each <code>s = s + "x"</code> creates a new string and copies the old one. Doing this n times = O(n²). Use StringBuilder (Java), <code>[].join()</code> (Python), or array+join (JS).</p></div></details>
+
+<details class="qa"><summary>What is the string pool in Java?</summary>
+<div class="qa-body"><p>JVM keeps a special area where string literals are interned (one copy per unique value). <code>"hi" == "hi"</code> is true because both refer to the same pooled string. <code>new String("hi") == "hi"</code> is false.</p></div></details>
+
+<details class="qa"><summary>What's the difference between == and .equals() in Java strings?</summary>
+<div class="qa-body"><p><code>==</code> compares references (memory addresses). <code>.equals()</code> compares content. Always use <code>.equals()</code> for string content comparison.</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: LINKED LIST ============
+CONTENT.linkedlist = `
+<h1>Linked Lists</h1>
+<p class="lead">Nodes connected by pointers. Each node holds data + reference to the next node. No random access, but cheap insert/delete.</p>
+
+<h2>Types</h2>
+<ul>
+  <li><strong>Singly linked</strong> — each node points to next</li>
+  <li><strong>Doubly linked</strong> — each node points to next and prev</li>
+  <li><strong>Circular</strong> — tail points back to head</li>
+</ul>
+
+<h2>Complexity</h2>
+<table>
+<tr><th>Operation</th><th>Time</th></tr>
+<tr><td>Access by index</td><td>O(n)</td></tr>
+<tr><td>Search</td><td>O(n)</td></tr>
+<tr><td>Insert at head/tail</td><td>O(1)</td></tr>
+<tr><td>Insert at position</td><td>O(n)</td></tr>
+<tr><td>Delete (if node ref known)</td><td>O(1)</td></tr>
+</table>
+
+<h2>Interactive linked list</h2>
+<div class="viz">
+  <div class="viz-controls">
+    <input id="ll-val" type="text" placeholder="value" style="width:80px">
+    <button onclick="llAddHead()">add head</button>
+    <button onclick="llAddTail()" class="sec">add tail</button>
+    <button onclick="llRemoveHead()" class="sec">remove head</button>
+    <button onclick="llReverse()" class="sec">reverse</button>
+    <button onclick="llReset()" class="sec">reset</button>
+  </div>
+  <div id="ll-viz" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-height:60px"></div>
+</div>
+
+<h2>Implementation</h2>
+<pre><code>class Node {
+  constructor(value){
+    this.value = value;
+    this.next = null;
+  }
+}
+
+class LinkedList {
+  constructor(){ this.head = null; this.size = 0; }
+
+  addHead(v){
+    const node = new Node(v);
+    node.next = this.head;
+    this.head = node;
+    this.size++;
+  }
+
+  addTail(v){
+    const node = new Node(v);
+    if (!this.head){ this.head = node; this.size++; return; }
+    let cur = this.head;
+    while (cur.next) cur = cur.next;
+    cur.next = node;
+    this.size++;
+  }
+
+  removeHead(){
+    if (!this.head) return null;
+    const v = this.head.value;
+    this.head = this.head.next;
+    this.size--;
+    return v;
+  }
+
+  find(v){
+    let cur = this.head;
+    while (cur){
+      if (cur.value === v) return cur;
+      cur = cur.next;
+    }
+    return null;
+  }
+}</code></pre>
+
+<h2>Classic problems</h2>
+
+<h3>Reverse a linked list (iterative)</h3>
+<pre><code>function reverse(head){
+  let prev = null, cur = head;
+  while (cur){
+    const next = cur.next;
+    cur.next = prev;
+    prev = cur;
+    cur = next;
+  }
+  return prev;
+}</code></pre>
+
+<h3>Detect cycle (Floyd's Tortoise &amp; Hare)</h3>
+<pre><code>function hasCycle(head){
+  let slow = head, fast = head;
+  while (fast &amp;&amp; fast.next){
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow === fast) return true;
+  }
+  return false;
+}</code></pre>
+
+<h3>Find middle node</h3>
+<pre><code>function middle(head){
+  let slow = head, fast = head;
+  while (fast &amp;&amp; fast.next){
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  return slow;
+}</code></pre>
+
+<h3>Merge two sorted lists</h3>
+<pre><code>function merge(a, b){
+  const dummy = { next: null };
+  let tail = dummy;
+  while (a &amp;&amp; b){
+    if (a.value &lt; b.value){ tail.next = a; a = a.next; }
+    else { tail.next = b; b = b.next; }
+    tail = tail.next;
+  }
+  tail.next = a || b;
+  return dummy.next;
+}</code></pre>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>Array vs Linked List — pros and cons?</summary>
+<div class="qa-body"><p><strong>Array</strong>: O(1) access, cache-friendly, fixed size or amortized resize. <strong>Linked List</strong>: O(1) insert/delete at known position, no resize, but O(n) access and poor cache locality.</p></div></details>
+
+<details class="qa"><summary>Singly vs doubly linked?</summary>
+<div class="qa-body"><p>Singly uses less memory (one pointer). Doubly allows O(1) deletion given a node ref and O(1) backward traversal. Browser history, undo stacks → doubly.</p></div></details>
+
+<details class="qa"><summary>How do you detect a cycle?</summary>
+<div class="qa-body"><p>Floyd's algorithm: two pointers, slow moves 1, fast moves 2. If there's a cycle they'll meet inside it. O(n) time, O(1) space.</p></div></details>
+
+<details class="qa"><summary>Real-world uses of linked lists?</summary>
+<div class="qa-body"><p>LRU caches (doubly linked + hashmap), undo/redo stacks, music playlist navigation, hash table separate chaining, allocator free lists.</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: STACK & QUEUE ============
+CONTENT.stackqueue = `
+<h1>Stack &amp; Queue</h1>
+<p class="lead">Both are linear collections with restricted access. Stack = LIFO. Queue = FIFO.</p>
+
+<h2>Stack — LIFO (Last In, First Out)</h2>
+<p>Think of a stack of plates: push on top, pop from top.</p>
+<table>
+<tr><th>Op</th><th>Time</th></tr>
+<tr><td>push</td><td>O(1)</td></tr>
+<tr><td>pop</td><td>O(1)</td></tr>
+<tr><td>peek/top</td><td>O(1)</td></tr>
+</table>
+
+<div class="viz">
+  <div class="viz-controls">
+    <input id="stk-val" type="text" placeholder="value" style="width:80px">
+    <button onclick="stkPush()">push</button>
+    <button onclick="stkPop()" class="sec">pop</button>
+    <button onclick="stkReset()" class="sec">reset</button>
+  </div>
+  <div id="stk-viz" style="display:flex;flex-direction:column-reverse;gap:4px;min-height:60px"></div>
+  <p style="color:var(--muted);font-size:12px;margin-top:8px">Top of stack is at the top of the visual.</p>
+</div>
+
+<h3>Implementation</h3>
+<pre><code>class Stack {
+  constructor(){ this.items = []; }
+  push(v){ this.items.push(v); }
+  pop(){ return this.items.pop(); }
+  peek(){ return this.items[this.items.length - 1]; }
+  isEmpty(){ return this.items.length === 0; }
+  size(){ return this.items.length; }
+}</code></pre>
+
+<h3>Uses</h3>
+<ul>
+  <li>Function call stack</li>
+  <li>Undo/redo</li>
+  <li>Browser back button</li>
+  <li>Expression parsing, bracket matching</li>
+  <li>DFS</li>
+</ul>
+
+<h3>Classic problem: balanced brackets</h3>
+<pre><code>function isBalanced(s){
+  const stack = [];
+  const pairs = { ")":"(", "]":"[", "}":"{" };
+  for (const c of s){
+    if ("([{".includes(c)) stack.push(c);
+    else if (")]}"".includes(c)){
+      if (stack.pop() !== pairs[c]) return false;
+    }
+  }
+  return stack.length === 0;
+}</code></pre>
+
+<h2>Queue — FIFO (First In, First Out)</h2>
+<p>Think of a line at a counter: people enter at the back, leave at the front.</p>
+
+<div class="viz">
+  <div class="viz-controls">
+    <input id="q-val" type="text" placeholder="value" style="width:80px">
+    <button onclick="qEnqueue()">enqueue</button>
+    <button onclick="qDequeue()" class="sec">dequeue</button>
+    <button onclick="qReset()" class="sec">reset</button>
+  </div>
+  <div id="q-viz" style="display:flex;gap:4px;align-items:center;min-height:60px"></div>
+  <p style="color:var(--muted);font-size:12px;margin-top:8px">← dequeue (front)   ·   (back) enqueue ←</p>
+</div>
+
+<h3>Implementation</h3>
+<pre><code>class Queue {
+  constructor(){ this.items = []; }
+  enqueue(v){ this.items.push(v); }
+  dequeue(){ return this.items.shift(); } // O(n) — use linked list for O(1)
+  front(){ return this.items[0]; }
+  isEmpty(){ return this.items.length === 0; }
+}</code></pre>
+
+<div class="note">⚠️ Array <code>shift()</code> is O(n). For a real O(1) queue, use a doubly linked list or two stacks.</div>
+
+<h3>Uses</h3>
+<ul>
+  <li>BFS</li>
+  <li>Task scheduling</li>
+  <li>Message queues (Kafka, RabbitMQ)</li>
+  <li>Print queue</li>
+</ul>
+
+<h2>Variants</h2>
+<ul>
+  <li><strong>Deque</strong> (double-ended queue) — insert/remove from both ends</li>
+  <li><strong>Priority queue</strong> — dequeue returns highest-priority element (heap-based)</li>
+  <li><strong>Circular queue</strong> — uses fixed-size array, wraps around</li>
+</ul>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>Implement a queue using two stacks</summary>
+<div class="qa-body"><pre><code>class Queue {
+  constructor(){ this.in = []; this.out = []; }
+  enqueue(v){ this.in.push(v); }
+  dequeue(){
+    if (!this.out.length)
+      while (this.in.length) this.out.push(this.in.pop());
+    return this.out.pop();
+  }
+}</code></pre><p>Enqueue: O(1). Dequeue: amortized O(1).</p></div></details>
+
+<details class="qa"><summary>Implement a stack with O(1) getMin()</summary>
+<div class="qa-body"><pre><code>class MinStack {
+  constructor(){ this.s=[]; this.m=[]; }
+  push(v){
+    this.s.push(v);
+    this.m.push(this.m.length ? Math.min(v, this.m[this.m.length-1]) : v);
+  }
+  pop(){ this.m.pop(); return this.s.pop(); }
+  getMin(){ return this.m[this.m.length-1]; }
+}</code></pre></div></details>
+
+<details class="qa"><summary>Why is recursion limited by stack size?</summary>
+<div class="qa-body"><p>Every function call pushes a frame on the call stack. The OS limits stack size (~1MB by default), so deep recursion overflows. Solution: convert to iteration with explicit stack, or use tail recursion (where supported).</p></div></details>
+`.replace('")]}"".includes(c)', '")]}".includes(c)');
+</script>
+
+<script>
+// ============ PAGE: TREES ============
+CONTENT.trees = `
+<h1>Trees</h1>
+<p class="lead">Hierarchical data structure with a root node and child nodes. Used everywhere: file systems, DOM, databases, parsers.</p>
+
+<h2>Key terms</h2>
+<ul>
+  <li><strong>Root</strong> — top node</li>
+  <li><strong>Parent / Child</strong> — relationship between connected nodes</li>
+  <li><strong>Leaf</strong> — node with no children</li>
+  <li><strong>Depth</strong> — distance from root</li>
+  <li><strong>Height</strong> — longest path from node to leaf</li>
+  <li><strong>Subtree</strong> — a node + all its descendants</li>
+</ul>
+
+<h2>Binary Tree</h2>
+<p>Each node has at most 2 children (left, right).</p>
+
+<h3>Binary Search Tree (BST)</h3>
+<p>A binary tree where for every node: <strong>left subtree &lt; node &lt; right subtree</strong>. Allows O(log n) search if balanced.</p>
+
+<div class="viz">
+  <div class="viz-controls">
+    <input id="bst-val" type="number" placeholder="value" style="width:80px">
+    <button onclick="bstInsert()">insert</button>
+    <button onclick="bstInorder()" class="sec">in-order</button>
+    <button onclick="bstReset()" class="sec">reset</button>
+  </div>
+  <svg id="bst-svg" viewBox="0 0 600 300" style="width:100%;height:300px;background:var(--panel)"></svg>
+  <p style="color:var(--muted);font-size:12px;margin-top:8px">Traversal: <span id="bst-trav">—</span></p>
+</div>
+
+<h2>Tree traversals</h2>
+<pre><code><span class="c">// In-order: left → root → right  (gives sorted output for BST)</span>
+function inorder(node, out=[]){
+  if (!node) return out;
+  inorder(node.left, out);
+  out.push(node.value);
+  inorder(node.right, out);
+  return out;
+}
+
+<span class="c">// Pre-order: root → left → right</span>
+function preorder(node, out=[]){
+  if (!node) return out;
+  out.push(node.value);
+  preorder(node.left, out);
+  preorder(node.right, out);
+  return out;
+}
+
+<span class="c">// Post-order: left → right → root</span>
+function postorder(node, out=[]){
+  if (!node) return out;
+  postorder(node.left, out);
+  postorder(node.right, out);
+  out.push(node.value);
+  return out;
+}
+
+<span class="c">// Level-order (BFS): top → bottom, left → right</span>
+function levelorder(root){
+  const out = [], q = [root];
+  while (q.length){
+    const n = q.shift();
+    if (!n) continue;
+    out.push(n.value);
+    q.push(n.left); q.push(n.right);
+  }
+  return out;
+}</code></pre>
+
+<h2>BST operations &amp; complexity</h2>
+<table>
+<tr><th>Op</th><th>Avg (balanced)</th><th>Worst (skewed)</th></tr>
+<tr><td>Search</td><td>O(log n)</td><td>O(n)</td></tr>
+<tr><td>Insert</td><td>O(log n)</td><td>O(n)</td></tr>
+<tr><td>Delete</td><td>O(log n)</td><td>O(n)</td></tr>
+</table>
+
+<h2>Self-balancing trees</h2>
+<ul>
+  <li><strong>AVL Tree</strong> — strictly balanced, more rotations on insert</li>
+  <li><strong>Red-Black Tree</strong> — loosely balanced, used in <code>TreeMap</code>, C++ <code>std::map</code></li>
+  <li><strong>B-Tree / B+ Tree</strong> — many children per node, used in databases &amp; filesystems</li>
+</ul>
+
+<h2>Common problems</h2>
+
+<h3>Height of binary tree</h3>
+<pre><code>function height(node){
+  if (!node) return 0;
+  return 1 + Math.max(height(node.left), height(node.right));
+}</code></pre>
+
+<h3>Is it a valid BST?</h3>
+<pre><code>function isBST(node, min=-Infinity, max=Infinity){
+  if (!node) return true;
+  if (node.value &lt;= min || node.value &gt;= max) return false;
+  return isBST(node.left, min, node.value)
+      &amp;&amp; isBST(node.right, node.value, max);
+}</code></pre>
+
+<h3>Lowest common ancestor (BST)</h3>
+<pre><code>function lca(root, p, q){
+  if (!root) return null;
+  if (p &lt; root.value &amp;&amp; q &lt; root.value) return lca(root.left, p, q);
+  if (p &gt; root.value &amp;&amp; q &gt; root.value) return lca(root.right, p, q);
+  return root;
+}</code></pre>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>When is a BST O(n) instead of O(log n)?</summary>
+<div class="qa-body"><p>When it degenerates into a "linked list" — e.g., inserting 1,2,3,4,5 in order. Solution: use a self-balancing BST (AVL, Red-Black).</p></div></details>
+
+<details class="qa"><summary>What are BSTs used for?</summary>
+<div class="qa-body"><p>Ordered maps/sets, database indexes (B+ tree), interval problems, range queries, autocomplete (with tries).</p></div></details>
+
+<details class="qa"><summary>BFS vs DFS — when to use?</summary>
+<div class="qa-body"><p><strong>BFS</strong>: shortest path (unweighted), level-by-level. Uses queue, O(w) space where w = width.<br><strong>DFS</strong>: tree/graph exploration, backtracking. Uses stack/recursion, O(h) space where h = height.</p></div></details>
+
+<details class="qa"><summary>What's a Trie?</summary>
+<div class="qa-body"><p>A tree for storing strings where each path from root represents a string. Used for autocomplete, spell-check, IP routing. Search/insert is O(k) where k = string length.</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: GRAPHS ============
+CONTENT.graphs = `
+<h1>Graphs</h1>
+<p class="lead">A set of <strong>nodes (vertices)</strong> connected by <strong>edges</strong>. Trees are a special case of graphs.</p>
+
+<h2>Terms</h2>
+<ul>
+  <li><strong>Directed</strong> — edges have direction (Twitter follows)</li>
+  <li><strong>Undirected</strong> — edges have no direction (Facebook friends)</li>
+  <li><strong>Weighted</strong> — edges have weights/costs (road distances)</li>
+  <li><strong>Cyclic</strong> — has at least one cycle</li>
+  <li><strong>DAG</strong> — directed acyclic graph (build dependencies)</li>
+</ul>
+
+<h2>Representations</h2>
+<div class="grid2">
+<div class="card">
+<h3>Adjacency List</h3>
+<pre><code>{
+  A: ["B", "C"],
+  B: ["A", "D"],
+  C: ["A"],
+  D: ["B"]
+}</code></pre>
+<p>Space: O(V + E). Best for sparse graphs.</p>
+</div>
+<div class="card">
+<h3>Adjacency Matrix</h3>
+<pre><code>     A  B  C  D
+  A [0, 1, 1, 0]
+  B [1, 0, 0, 1]
+  C [1, 0, 0, 0]
+  D [0, 1, 0, 0]</code></pre>
+<p>Space: O(V²). Best for dense graphs.</p>
+</div>
+</div>
+
+<h2>BFS — Breadth-First Search</h2>
+<p>Explore level by level. Uses a queue. <strong>Shortest path</strong> in unweighted graphs.</p>
+<pre><code>function bfs(graph, start){
+  const visited = new Set([start]);
+  const queue = [start];
+  const order = [];
+  while (queue.length){
+    const node = queue.shift();
+    order.push(node);
+    for (const nb of graph[node] || []){
+      if (!visited.has(nb)){
+        visited.add(nb);
+        queue.push(nb);
+      }
+    }
+  }
+  return order;
+}</code></pre>
+
+<h2>DFS — Depth-First Search</h2>
+<p>Go as deep as possible before backtracking. Uses a stack or recursion.</p>
+<pre><code>function dfs(graph, start, visited = new Set()){
+  if (visited.has(start)) return;
+  visited.add(start);
+  console.log(start);
+  for (const nb of graph[start] || []) dfs(graph, nb, visited);
+}</code></pre>
+
+<h2>Dijkstra's algorithm (shortest path, weighted)</h2>
+<pre><code>function dijkstra(graph, start){
+  const dist = {};
+  for (const node in graph) dist[node] = Infinity;
+  dist[start] = 0;
+  const pq = [[0, start]]; // [distance, node] — use a real heap in practice
+
+  while (pq.length){
+    pq.sort((a,b) =&gt; a[0] - b[0]);
+    const [d, node] = pq.shift();
+    if (d &gt; dist[node]) continue;
+    for (const [nb, w] of graph[node] || []){
+      const nd = d + w;
+      if (nd &lt; dist[nb]){
+        dist[nb] = nd;
+        pq.push([nd, nb]);
+      }
+    }
+  }
+  return dist;
+}</code></pre>
+
+<h2>Topological sort (DAG)</h2>
+<pre><code>function topoSort(graph){
+  const visited = new Set(), stack = [];
+  function dfs(n){
+    if (visited.has(n)) return;
+    visited.add(n);
+    for (const nb of graph[n] || []) dfs(nb);
+    stack.push(n);
+  }
+  for (const n in graph) dfs(n);
+  return stack.reverse();
+}</code></pre>
+<p>Used for build systems, course scheduling, dependency resolution.</p>
+
+<h2>Try it</h2>
+<div class="runner">
+  <textarea id="run-graph">const graph = {
+  A: ["B", "C"],
+  B: ["D", "E"],
+  C: ["F"],
+  D: [],
+  E: ["F"],
+  F: []
+};
+
+function bfs(start){
+  const seen = new Set([start]);
+  const q = [start], order = [];
+  while (q.length){
+    const n = q.shift();
+    order.push(n);
+    for (const nb of graph[n]){
+      if (!seen.has(nb)){ seen.add(nb); q.push(nb); }
+    }
+  }
+  return order;
+}
+
+console.log("BFS:", bfs("A").join(" → "));</textarea>
+  <div class="rbar"><span style="color:var(--muted);font-size:12px">JavaScript</span><button onclick="runCode('run-graph','out-graph')">▶ Run</button></div>
+  <div class="out" id="out-graph">// output appears here</div>
+</div>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>Adjacency list vs matrix — which to use?</summary>
+<div class="qa-body"><p>List: O(V+E) space, good for sparse graphs, O(degree) to check neighbors. Matrix: O(V²) space, O(1) edge check, better for dense graphs and matrix operations.</p></div></details>
+
+<details class="qa"><summary>How do you detect a cycle in a directed graph?</summary>
+<div class="qa-body"><p>DFS with 3 colors: white (unvisited), gray (in current path), black (done). If you reach a gray node again → cycle.</p></div></details>
+
+<details class="qa"><summary>What real-world problems are graph problems?</summary>
+<div class="qa-body"><p>Social networks, GPS routing, web crawling, recommendation systems, dependency resolution, network flow, game maps, knowledge graphs.</p></div></details>
+
+<details class="qa"><summary>Dijkstra vs BFS — when to use?</summary>
+<div class="qa-body"><p>BFS for shortest path in <em>unweighted</em> graphs. Dijkstra for shortest path with <em>non-negative</em> weights. Bellman-Ford handles negative weights.</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: HASH TABLES ============
+CONTENT.hash = `
+<h1>Hash Tables</h1>
+<p class="lead">Key-value store with O(1) average lookup. The interview workhorse — knowing when to reach for one is half the battle.</p>
+
+<h2>How it works</h2>
+<ol>
+  <li>A <strong>hash function</strong> converts a key into an integer index</li>
+  <li>That index points to a bucket in an internal array</li>
+  <li>Collisions (two keys → same index) are handled by chaining or open addressing</li>
+</ol>
+
+<h2>Complexity</h2>
+<table>
+<tr><th>Op</th><th>Average</th><th>Worst</th></tr>
+<tr><td>Insert</td><td>O(1)</td><td>O(n)</td></tr>
+<tr><td>Lookup</td><td>O(1)</td><td>O(n)</td></tr>
+<tr><td>Delete</td><td>O(1)</td><td>O(n)</td></tr>
+</table>
+<p>Worst case happens if all keys hash to the same bucket. Good hash functions + resizing keep it O(1) in practice.</p>
+
+<h2>Collision handling</h2>
+<ul>
+  <li><strong>Separate chaining</strong> — each bucket is a linked list (or tree). Used in Java <code>HashMap</code>.</li>
+  <li><strong>Open addressing</strong> — on collision, find next empty slot (linear probing, quadratic probing, double hashing). Used in Python <code>dict</code>.</li>
+</ul>
+
+<h2>Load factor &amp; resizing</h2>
+<p><strong>Load factor</strong> = entries / buckets. When it crosses a threshold (e.g., 0.75 in Java), the table doubles capacity and rehashes — that's the occasional O(n) cost behind amortized O(1).</p>
+
+<h2>JavaScript objects vs Map</h2>
+<pre><code><span class="c">// Object — keys are strings/symbols</span>
+const obj = {};
+obj[<span class="s">"key"</span>] = <span class="n">1</span>;
+
+<span class="c">// Map — any key type, preserves insertion order, has .size</span>
+const m = <span class="k">new</span> Map();
+m.set(<span class="s">"key"</span>, <span class="n">1</span>);
+m.set({}, <span class="n">2</span>);    <span class="c">// object as key — works!</span>
+m.size;            <span class="c">// 2</span></code></pre>
+
+<h2>Classic problem: Two-Sum</h2>
+<pre><code>function twoSum(nums, target){
+  const seen = new Map();
+  for (let i=0; i&lt;nums.length; i++){
+    const need = target - nums[i];
+    if (seen.has(need)) return [seen.get(need), i];
+    seen.set(nums[i], i);
+  }
+  return [];
+}</code></pre>
+<p>O(n) time, O(n) space. Hash table turns O(n²) brute force into O(n).</p>
+
+<h2>Frequency counter pattern</h2>
+<pre><code>function mostFrequent(arr){
+  const count = new Map();
+  for (const x of arr) count.set(x, (count.get(x) || 0) + 1);
+  let best, max = 0;
+  for (const [k, v] of count) if (v &gt; max){ max = v; best = k; }
+  return best;
+}</code></pre>
+
+<h2>Group anagrams</h2>
+<pre><code>function groupAnagrams(words){
+  const groups = new Map();
+  for (const w of words){
+    const key = [...w].sort().join("");
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(w);
+  }
+  return [...groups.values()];
+}</code></pre>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>What makes a good hash function?</summary>
+<div class="qa-body"><p>Deterministic, fast to compute, uniformly distributes keys (minimizes collisions), and uses all bits of the input. For security: also one-way (cryptographic hashes like SHA-256).</p></div></details>
+
+<details class="qa"><summary>HashMap vs HashSet?</summary>
+<div class="qa-body"><p>HashSet stores unique values only. HashMap stores key→value pairs. Internally a HashSet is usually a HashMap where the value is a dummy.</p></div></details>
+
+<details class="qa"><summary>What's the difference between HashMap and TreeMap?</summary>
+<div class="qa-body"><p>HashMap: O(1) ops, no ordering. TreeMap: O(log n) ops, keeps keys sorted (Red-Black tree). Use TreeMap when you need range queries or sorted iteration.</p></div></details>
+
+<details class="qa"><summary>Why can't you use a list as a dict key in Python?</summary>
+<div class="qa-body"><p>Lists are mutable. If you modify a list used as a key, its hash changes and the dict can't find it anymore. Hash keys must be immutable/hashable.</p></div></details>
+
+<details class="qa"><summary>How would you implement a HashMap from scratch?</summary>
+<div class="qa-body"><pre><code>class HashMap {
+  constructor(cap=16){ this.cap = cap; this.size = 0; this.buckets = Array.from({length:cap}, () =&gt; []); }
+  _hash(k){
+    let h = 0;
+    for (const c of String(k)) h = (h * 31 + c.charCodeAt(0)) | 0;
+    return Math.abs(h) % this.cap;
+  }
+  set(k, v){
+    const b = this.buckets[this._hash(k)];
+    const i = b.findIndex(e =&gt; e[0] === k);
+    if (i &gt;= 0) b[i][1] = v;
+    else { b.push([k, v]); this.size++; }
+  }
+  get(k){
+    const b = this.buckets[this._hash(k)];
+    const e = b.find(e =&gt; e[0] === k);
+    return e ? e[1] : undefined;
+  }
+  has(k){ return this.get(k) !== undefined; }
+}</code></pre></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: HEAPS ============
+CONTENT.heaps = `
+<h1>Heaps &amp; Priority Queue</h1>
+<p class="lead">A heap is a tree-based data structure where parent is always ≤ (min-heap) or ≥ (max-heap) its children. Used to implement priority queues.</p>
+
+<h2>Properties</h2>
+<ul>
+  <li>Complete binary tree (filled level by level, left to right)</li>
+  <li>Stored as an array — parent at <code>i</code>, children at <code>2i+1</code> and <code>2i+2</code></li>
+  <li>Get min/max: O(1) — it's the root</li>
+  <li>Insert: O(log n) — bubble up</li>
+  <li>Extract min/max: O(log n) — sift down</li>
+</ul>
+
+<h2>When to use a heap</h2>
+<ul>
+  <li>Top-K problems (top 10 trending tweets)</li>
+  <li>Dijkstra's shortest path</li>
+  <li>Merge K sorted lists</li>
+  <li>Task scheduling by priority</li>
+  <li>Streaming median</li>
+</ul>
+
+<h2>Min-heap implementation</h2>
+<pre><code>class MinHeap {
+  constructor(){ this.h = []; }
+  size(){ return this.h.length; }
+  peek(){ return this.h[0]; }
+
+  push(v){
+    this.h.push(v);
+    this._up(this.h.length - 1);
+  }
+
+  pop(){
+    if (!this.h.length) return undefined;
+    const top = this.h[0];
+    const last = this.h.pop();
+    if (this.h.length){ this.h[0] = last; this._down(0); }
+    return top;
+  }
+
+  _up(i){
+    while (i &gt; 0){
+      const p = (i - 1) &gt;&gt; 1;
+      if (this.h[p] &lt;= this.h[i]) break;
+      [this.h[p], this.h[i]] = [this.h[i], this.h[p]];
+      i = p;
+    }
+  }
+
+  _down(i){
+    const n = this.h.length;
+    while (true){
+      const l = 2*i + 1, r = 2*i + 2;
+      let smallest = i;
+      if (l &lt; n &amp;&amp; this.h[l] &lt; this.h[smallest]) smallest = l;
+      if (r &lt; n &amp;&amp; this.h[r] &lt; this.h[smallest]) smallest = r;
+      if (smallest === i) break;
+      [this.h[i], this.h[smallest]] = [this.h[smallest], this.h[i]];
+      i = smallest;
+    }
+  }
+}</code></pre>
+
+<h2>Try it</h2>
+<div class="runner">
+  <textarea id="run-heap">// Find top 3 elements using min-heap of size 3
+function topK(arr, k){
+  // Just a simulation with sort for brevity
+  return [...arr].sort((a,b) =&gt; b - a).slice(0, k);
+}
+console.log("Top 3 of [3,1,5,2,8,4,7]:", topK([3,1,5,2,8,4,7], 3));
+console.log("Top 5 of random:", topK([10,5,3,8,1,9,2,7,4,6], 5));</textarea>
+  <div class="rbar"><span style="color:var(--muted);font-size:12px">JavaScript</span><button onclick="runCode('run-heap','out-heap')">▶ Run</button></div>
+  <div class="out" id="out-heap">// output appears here</div>
+</div>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>Heap vs BST?</summary>
+<div class="qa-body"><p>Both are O(log n) insert. Heap = O(1) peek of min/max, no ordering of other elements. BST = O(log n) for any search, supports in-order iteration. Heap is better for priority queues; BST is better for ordered range queries.</p></div></details>
+
+<details class="qa"><summary>How would you find the K largest elements in a stream?</summary>
+<div class="qa-body"><p>Maintain a <strong>min-heap of size K</strong>. For each new element: if heap size &lt; K, push. Otherwise, if element &gt; heap.peek(), pop and push. End result: heap contains top K.</p></div></details>
+
+<details class="qa"><summary>How to find the running median of a stream?</summary>
+<div class="qa-body"><p>Two heaps: a max-heap for lower half, a min-heap for upper half. Keep sizes balanced. Median = top of one (odd count) or average of both tops (even count).</p></div></details>
+
+<details class="qa"><summary>Is a heap sorted?</summary>
+<div class="qa-body"><p>No — only the parent-child relationship is ordered. Siblings have no ordering. The array representation is NOT sorted.</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: SORTING ============
+CONTENT.sorting = `
+<h1>Sorting Algorithms</h1>
+<p class="lead">Knowing how the common sorts work — and their tradeoffs — comes up in nearly every interview.</p>
+
+<h2>Comparison table</h2>
+<table>
+<tr><th>Algorithm</th><th>Best</th><th>Avg</th><th>Worst</th><th>Space</th><th>Stable?</th></tr>
+<tr><td>Bubble Sort</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>Yes</td></tr>
+<tr><td>Selection Sort</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>No</td></tr>
+<tr><td>Insertion Sort</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td><td>Yes</td></tr>
+<tr><td>Merge Sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n)</td><td>Yes</td></tr>
+<tr><td>Quick Sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n²)</td><td>O(log n)</td><td>No</td></tr>
+<tr><td>Heap Sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>O(1)</td><td>No</td></tr>
+<tr><td>Counting Sort</td><td>O(n+k)</td><td>O(n+k)</td><td>O(n+k)</td><td>O(k)</td><td>Yes</td></tr>
+</table>
+<p style="color:var(--muted);font-size:13px"><strong>Stable</strong> = preserves order of equal keys.</p>
+
+<h2>Live sorting visualizer</h2>
+<div class="viz">
+  <div class="viz-controls">
+    <button onclick="sortGen()">new array</button>
+    <button onclick="sortRun('bubble')" class="sec">bubble</button>
+    <button onclick="sortRun('insertion')" class="sec">insertion</button>
+    <button onclick="sortRun('selection')" class="sec">selection</button>
+    <button onclick="sortRun('quick')" class="sec">quick</button>
+  </div>
+  <div id="sort-viz" style="display:flex;align-items:flex-end;gap:2px;height:160px"></div>
+</div>
+
+<h2>Bubble Sort</h2>
+<pre><code>function bubbleSort(arr){
+  const n = arr.length;
+  for (let i=0; i&lt;n-1; i++){
+    let swapped = false;
+    for (let j=0; j&lt;n-1-i; j++){
+      if (arr[j] &gt; arr[j+1]){
+        [arr[j], arr[j+1]] = [arr[j+1], arr[j]];
+        swapped = true;
+      }
+    }
+    if (!swapped) break;
+  }
+  return arr;
+}</code></pre>
+<p>Repeatedly swap adjacent elements. The early-exit makes it O(n) if already sorted.</p>
+
+<h2>Insertion Sort</h2>
+<pre><code>function insertionSort(arr){
+  for (let i=1; i&lt;arr.length; i++){
+    const cur = arr[i];
+    let j = i - 1;
+    while (j &gt;= 0 &amp;&amp; arr[j] &gt; cur){
+      arr[j+1] = arr[j];
+      j--;
+    }
+    arr[j+1] = cur;
+  }
+  return arr;
+}</code></pre>
+<p>Great for nearly-sorted arrays or small datasets. Hybrid sorts (Timsort) use it for small chunks.</p>
+
+<h2>Merge Sort</h2>
+<pre><code>function mergeSort(arr){
+  if (arr.length &lt;= 1) return arr;
+  const mid = arr.length &gt;&gt; 1;
+  const L = mergeSort(arr.slice(0, mid));
+  const R = mergeSort(arr.slice(mid));
+  return merge(L, R);
+}
+
+function merge(L, R){
+  const out = [];
+  let i=0, j=0;
+  while (i &lt; L.length &amp;&amp; j &lt; R.length){
+    if (L[i] &lt;= R[j]) out.push(L[i++]);
+    else out.push(R[j++]);
+  }
+  return out.concat(L.slice(i)).concat(R.slice(j));
+}</code></pre>
+<p>Classic divide-and-conquer. Stable. Guaranteed O(n log n). Good for linked lists.</p>
+
+<h2>Quick Sort</h2>
+<pre><code>function quickSort(arr, lo=0, hi=arr.length-1){
+  if (lo &gt;= hi) return arr;
+  const p = partition(arr, lo, hi);
+  quickSort(arr, lo, p-1);
+  quickSort(arr, p+1, hi);
+  return arr;
+}
+
+function partition(arr, lo, hi){
+  const pivot = arr[hi];
+  let i = lo;
+  for (let j=lo; j&lt;hi; j++){
+    if (arr[j] &lt; pivot){
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+      i++;
+    }
+  }
+  [arr[i], arr[hi]] = [arr[hi], arr[i]];
+  return i;
+}</code></pre>
+<p>In-place, very fast in practice. Worst case O(n²) when pivot is always min/max — use randomized or median-of-three pivot to avoid.</p>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>Which sort does JavaScript use?</summary>
+<div class="qa-body"><p>V8 uses <strong>Timsort</strong> (hybrid of merge + insertion). Stable, O(n log n) worst case. Used by Python and Java for objects too.</p></div></details>
+
+<details class="qa"><summary>When would you use insertion sort over merge sort?</summary>
+<div class="qa-body"><p>For very small arrays (n &lt; ~20), nearly-sorted arrays, or online (streaming) sorting. Insertion sort has lower constant factors.</p></div></details>
+
+<details class="qa"><summary>Why is merge sort O(n log n) guaranteed?</summary>
+<div class="qa-body"><p>log n levels of recursion (halving each time), each level does O(n) work to merge. Doesn't depend on input ordering.</p></div></details>
+
+<details class="qa"><summary>What's a stable sort and why does it matter?</summary>
+<div class="qa-body"><p>Equal elements keep their relative order. Matters when sorting by multiple criteria — e.g., sort by name (stable), then by department: items in the same department stay name-sorted.</p></div></details>
+
+<details class="qa"><summary>How do non-comparison sorts beat O(n log n)?</summary>
+<div class="qa-body"><p>Counting / radix / bucket sort exploit the structure of the data (integer range, fixed length). They're O(n + k) but only work when k is small relative to n.</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: SEARCHING ============
+CONTENT.searching = `
+<h1>Searching Algorithms</h1>
+<p class="lead">Finding an element in a collection. Choice of algorithm depends on whether data is sorted, indexed, or structured.</p>
+
+<h2>Linear Search — O(n)</h2>
+<pre><code>function linearSearch(arr, target){
+  for (let i=0; i&lt;arr.length; i++)
+    if (arr[i] === target) return i;
+  return -1;
+}</code></pre>
+<p>Works on any data. The only option for unsorted arrays.</p>
+
+<h2>Binary Search — O(log n)</h2>
+<p>Requires sorted input. Halves the search space each step.</p>
+<pre><code>function binarySearch(arr, target){
+  let lo = 0, hi = arr.length - 1;
+  while (lo &lt;= hi){
+    const mid = (lo + hi) &gt;&gt; 1;
+    if (arr[mid] === target) return mid;
+    if (arr[mid] &lt; target) lo = mid + 1;
+    else hi = mid - 1;
+  }
+  return -1;
+}</code></pre>
+
+<div class="note">⚠️ Watch for off-by-one bugs. Use <code>lo + (hi - lo) / 2</code> instead of <code>(lo+hi)/2</code> to avoid integer overflow in Java/C++.</div>
+
+<h2>Recursive binary search</h2>
+<pre><code>function bs(arr, target, lo=0, hi=arr.length-1){
+  if (lo &gt; hi) return -1;
+  const mid = (lo + hi) &gt;&gt; 1;
+  if (arr[mid] === target) return mid;
+  return arr[mid] &lt; target
+    ? bs(arr, target, mid+1, hi)
+    : bs(arr, target, lo, mid-1);
+}</code></pre>
+
+<h2>Find first/last occurrence (with duplicates)</h2>
+<pre><code>function firstOccurrence(arr, target){
+  let lo=0, hi=arr.length-1, res=-1;
+  while (lo &lt;= hi){
+    const mid = (lo+hi) &gt;&gt; 1;
+    if (arr[mid] === target){ res = mid; hi = mid - 1; }
+    else if (arr[mid] &lt; target) lo = mid + 1;
+    else hi = mid - 1;
+  }
+  return res;
+}</code></pre>
+
+<h2>Search in rotated sorted array</h2>
+<pre><code>function searchRotated(arr, target){
+  let lo=0, hi=arr.length-1;
+  while (lo &lt;= hi){
+    const mid = (lo+hi) &gt;&gt; 1;
+    if (arr[mid] === target) return mid;
+    if (arr[lo] &lt;= arr[mid]){
+      if (arr[lo] &lt;= target &amp;&amp; target &lt; arr[mid]) hi = mid - 1;
+      else lo = mid + 1;
+    } else {
+      if (arr[mid] &lt; target &amp;&amp; target &lt;= arr[hi]) lo = mid + 1;
+      else hi = mid - 1;
+    }
+  }
+  return -1;
+}</code></pre>
+
+<h2>Try it</h2>
+<div class="runner">
+  <textarea id="run-bs">function binarySearch(arr, target){
+  let lo=0, hi=arr.length-1, steps=0;
+  while (lo &lt;= hi){
+    steps++;
+    const mid = (lo+hi) &gt;&gt; 1;
+    if (arr[mid] === target) return { index: mid, steps };
+    if (arr[mid] &lt; target) lo = mid + 1;
+    else hi = mid - 1;
+  }
+  return { index: -1, steps };
+}
+
+const arr = Array.from({length: 1000}, (_, i) =&gt; i * 2);
+console.log("Searching 1234 in 0..1998:");
+console.log(binarySearch(arr, 1234));
+console.log("Linear would take ~617 steps; binary takes:", "↑");</textarea>
+  <div class="rbar"><span style="color:var(--muted);font-size:12px">JavaScript</span><button onclick="runCode('run-bs','out-bs')">▶ Run</button></div>
+  <div class="out" id="out-bs">// output appears here</div>
+</div>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>When is linear search better than binary search?</summary>
+<div class="qa-body"><p>When data is unsorted (sorting would cost O(n log n)), data is very small, you only search once, or data has no order property (linked list).</p></div></details>
+
+<details class="qa"><summary>How many comparisons does binary search take?</summary>
+<div class="qa-body"><p>Worst case ⌈log₂(n)⌉ + 1. For n = 1 million, that's ~20 comparisons vs ~500,000 for linear search.</p></div></details>
+
+<details class="qa"><summary>Can binary search work on a linked list?</summary>
+<div class="qa-body"><p>Not efficiently — finding the middle is O(n) since there's no random access. Use a balanced BST or skip list instead.</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: RECURSION & DP ============
+CONTENT.recursion = `
+<h1>Recursion &amp; Dynamic Programming</h1>
+<p class="lead">Recursion = a function that calls itself. DP = recursion + memoization to avoid recomputing.</p>
+
+<h2>Anatomy of a recursive function</h2>
+<ul>
+  <li><strong>Base case</strong> — when to stop (otherwise infinite recursion)</li>
+  <li><strong>Recursive case</strong> — reduce the problem and call self on smaller input</li>
+</ul>
+
+<h2>Examples</h2>
+
+<h3>Factorial</h3>
+<pre><code>function fact(n){
+  if (n &lt;= 1) return 1;       // base
+  return n * fact(n - 1);     // recursive
+}</code></pre>
+
+<h3>Fibonacci (naive — O(2ⁿ))</h3>
+<pre><code>function fib(n){
+  if (n &lt; 2) return n;
+  return fib(n-1) + fib(n-2);
+}</code></pre>
+<p>For n=50, this takes years. Why? It recomputes the same values over and over.</p>
+
+<h3>Fibonacci (memoized — O(n))</h3>
+<pre><code>function fib(n, memo = {}){
+  if (n &lt; 2) return n;
+  if (memo[n] !== undefined) return memo[n];
+  return memo[n] = fib(n-1, memo) + fib(n-2, memo);
+}</code></pre>
+
+<h3>Fibonacci (bottom-up DP — O(n) time, O(1) space)</h3>
+<pre><code>function fib(n){
+  if (n &lt; 2) return n;
+  let a=0, b=1;
+  for (let i=2; i&lt;=n; i++){
+    [a, b] = [b, a + b];
+  }
+  return b;
+}</code></pre>
+
+<h2>When to use recursion</h2>
+<ul>
+  <li>Tree / graph traversal</li>
+  <li>Divide and conquer (merge sort, quick sort)</li>
+  <li>Backtracking (permutations, N-queens, Sudoku)</li>
+  <li>Problems with naturally recursive structure</li>
+</ul>
+
+<h2>When to memoize → DP</h2>
+<p>If you find yourself solving the same subproblem multiple times, memoize. If the call tree has overlapping subproblems AND optimal substructure, it's a DP problem.</p>
+
+<h2>DP example: climbing stairs</h2>
+<p>You can take 1 or 2 steps. How many ways to climb n stairs?</p>
+<pre><code>function climbStairs(n){
+  if (n &lt;= 2) return n;
+  let a=1, b=2;
+  for (let i=3; i&lt;=n; i++) [a, b] = [b, a + b];
+  return b;
+}</code></pre>
+<p>It's just Fibonacci.</p>
+
+<h2>DP example: coin change (min coins)</h2>
+<pre><code>function coinChange(coins, amount){
+  const dp = new Array(amount + 1).fill(Infinity);
+  dp[0] = 0;
+  for (let a=1; a&lt;=amount; a++){
+    for (const c of coins){
+      if (c &lt;= a &amp;&amp; dp[a-c] + 1 &lt; dp[a]) dp[a] = dp[a-c] + 1;
+    }
+  }
+  return dp[amount] === Infinity ? -1 : dp[amount];
+}</code></pre>
+
+<h2>Backtracking example: subsets</h2>
+<pre><code>function subsets(nums){
+  const out = [];
+  function backtrack(i, cur){
+    if (i === nums.length){ out.push([...cur]); return; }
+    backtrack(i + 1, cur);            // exclude nums[i]
+    cur.push(nums[i]);
+    backtrack(i + 1, cur);            // include nums[i]
+    cur.pop();
+  }
+  backtrack(0, []);
+  return out;
+}</code></pre>
+
+<h2>Try it</h2>
+<div class="runner">
+  <textarea id="run-dp">// Fibonacci, three ways
+function naive(n){ return n &lt; 2 ? n : naive(n-1) + naive(n-2); }
+function memoized(n, m={}){ if (n&lt;2) return n; if (m[n]!==undefined) return m[n]; return m[n] = memoized(n-1,m)+memoized(n-2,m); }
+function iterative(n){ let a=0,b=1; for(let i=2;i&lt;=n;i++) [a,b]=[b,a+b]; return b; }
+
+const n = 30;
+console.time("naive");    console.log("naive   :", naive(n));    console.timeEnd("naive");
+console.time("memoized"); console.log("memoized:", memoized(n)); console.timeEnd("memoized");
+console.time("iterative");console.log("iter    :", iterative(n));console.timeEnd("iterative");</textarea>
+  <div class="rbar"><span style="color:var(--muted);font-size:12px">JavaScript</span><button onclick="runCode('run-dp','out-dp')">▶ Run</button></div>
+  <div class="out" id="out-dp">// output appears here</div>
+</div>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>What's a stack overflow? How do you fix one?</summary>
+<div class="qa-body"><p>When recursion depth exceeds the call stack limit. Fixes: ensure a correct base case, convert to iteration, use tail recursion (in languages that optimize it), increase stack size, or use explicit stack data structure.</p></div></details>
+
+<details class="qa"><summary>Recursion vs iteration — which is better?</summary>
+<div class="qa-body"><p>Iteration is usually faster (no call overhead) and safer (no stack overflow). Recursion is cleaner for tree/graph traversal and naturally recursive problems. Most languages don't optimize tail calls, so iteration wins on raw performance.</p></div></details>
+
+<details class="qa"><summary>What's the difference between top-down and bottom-up DP?</summary>
+<div class="qa-body"><p><strong>Top-down (memoization)</strong>: start from the problem, recurse to subproblems, cache results. <strong>Bottom-up (tabulation)</strong>: start from base cases, build up to the answer iteratively. Bottom-up is usually faster and uses less stack.</p></div></details>
+
+<details class="qa"><summary>How do you recognize a DP problem?</summary>
+<div class="qa-body"><p>Look for: (1) overlapping subproblems — same input solved multiple times. (2) optimal substructure — solution can be built from optimal solutions of subproblems. (3) keywords: "count ways", "minimum/maximum", "longest", "shortest".</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: OOP ============
+CONTENT.oop = `
+<h1>OOP — Object-Oriented Programming</h1>
+<p class="lead">A paradigm built around objects — data + behavior bundled together. Cornerstone of Java, C#, C++, Python.</p>
+
+<h2>The 4 pillars</h2>
+
+<h3>1. Encapsulation</h3>
+<p>Bundle data and methods that work on it inside one unit (class). Hide internal state behind a public interface (private fields + getters/setters).</p>
+<pre><code>class BankAccount {
+  #balance = 0;                <span class="c">// private field (#)</span>
+  deposit(amt){
+    if (amt &lt;= 0) throw new Error(<span class="s">"invalid"</span>);
+    this.#balance += amt;
+  }
+  get balance(){ return this.#balance; }
+}</code></pre>
+<p><strong>Why it matters:</strong> You can change internal storage without breaking callers. Invariants are enforced (no negative deposits).</p>
+
+<h3>2. Inheritance</h3>
+<p>A class can extend another, inheriting its fields and methods.</p>
+<pre><code>class Animal {
+  constructor(name){ this.name = name; }
+  speak(){ return <span class="s">\`\${this.name} makes a sound\`</span>; }
+}
+
+class Dog <span class="k">extends</span> Animal {
+  speak(){ return <span class="s">\`\${this.name} barks\`</span>; } // override
+}
+
+new Dog(<span class="s">"Rex"</span>).speak(); <span class="c">// "Rex barks"</span></code></pre>
+<p><strong>Watch out:</strong> Deep inheritance hierarchies become fragile. Prefer <strong>composition over inheritance</strong>.</p>
+
+<h3>3. Polymorphism</h3>
+<p>Same interface, different behavior. Two flavors:</p>
+<ul>
+  <li><strong>Compile-time (overloading)</strong> — same method name, different parameters (Java/C++).</li>
+  <li><strong>Runtime (overriding)</strong> — child class overrides parent method. Called via parent reference but runs child code.</li>
+</ul>
+<pre><code>Animal[] zoo = { new Dog(), new Cat(), new Cow() };
+for (Animal a : zoo) a.speak();  // each calls its own speak()</code></pre>
+
+<h3>4. Abstraction</h3>
+<p>Hide complexity behind a simple interface. Users don't need to know how something works to use it.</p>
+<pre><code><span class="c">// abstract class — can't instantiate, but defines contract</span>
+abstract class Shape {
+  abstract area();
+}
+class Circle <span class="k">extends</span> Shape {
+  constructor(r){ super(); this.r = r; }
+  area(){ return Math.PI * this.r ** 2; }
+}</code></pre>
+
+<h2>Class vs Object vs Instance</h2>
+<ul>
+  <li><strong>Class</strong> — the blueprint (template)</li>
+  <li><strong>Object / Instance</strong> — a concrete realization of a class in memory</li>
+</ul>
+
+<h2>Interface vs Abstract class</h2>
+<table>
+<tr><th></th><th>Interface</th><th>Abstract Class</th></tr>
+<tr><td>Methods</td><td>Only signatures (default OK in modern langs)</td><td>Can have implementations</td></tr>
+<tr><td>Fields</td><td>Constants only</td><td>Any fields</td></tr>
+<tr><td>Multiple inheritance?</td><td>Yes — a class can implement many</td><td>No (in Java/C#)</td></tr>
+<tr><td>When to use</td><td>"can do" — capability contract</td><td>"is a" — shared base with code</td></tr>
+</table>
+
+<h2>Composition over inheritance</h2>
+<pre><code><span class="c">// Inheritance — Bird IS-A Animal, but does it FLY?</span>
+class Bird extends Animal { fly(){} }
+class Penguin extends Bird { /* but penguins don't fly! */ }
+
+<span class="c">// Composition — Bird HAS-A FlyBehavior</span>
+class Bird {
+  constructor(fly){ this.fly = fly; }
+}
+new Bird(canFly);
+new Bird(cannotFly);</code></pre>
+<p>Composition is more flexible and avoids the "fragile base class" problem.</p>
+
+<h2>Constructor &amp; this</h2>
+<pre><code>class Point {
+  constructor(x, y){
+    this.x = x;
+    this.y = y;
+  }
+  distance(other){
+    return Math.hypot(this.x - other.x, this.y - other.y);
+  }
+}</code></pre>
+
+<h2>Static vs Instance members</h2>
+<pre><code>class MathHelper {
+  static PI = 3.14159;
+  static circle(r){ return MathHelper.PI * r * r; }
+}
+MathHelper.circle(5);  <span class="c">// no instance needed</span></code></pre>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>Method overloading vs overriding?</summary>
+<div class="qa-body"><p><strong>Overloading</strong>: same name, different signatures, same class — resolved at compile time.<br><strong>Overriding</strong>: same name &amp; signature in subclass — resolved at runtime (dynamic dispatch).</p></div></details>
+
+<details class="qa"><summary>When should you use abstract class vs interface?</summary>
+<div class="qa-body"><p>Abstract class when subclasses share code and an "is-a" relationship. Interface when unrelated classes should share a capability ("can do"). Modern designs lean on interfaces + composition.</p></div></details>
+
+<details class="qa"><summary>What is the Liskov Substitution Principle (LSP)?</summary>
+<div class="qa-body"><p>Subtypes must be substitutable for their base types without breaking behavior. If <code>Square extends Rectangle</code> but breaks <code>setWidth/setHeight</code> independence, LSP is violated.</p></div></details>
+
+<details class="qa"><summary>What's a constructor? Can it be private?</summary>
+<div class="qa-body"><p>A special method that runs when an object is created. Yes, private constructors are used in Singletons and factory methods to control instantiation.</p></div></details>
+
+<details class="qa"><summary>What's the difference between shallow and deep copy?</summary>
+<div class="qa-body"><p><strong>Shallow</strong>: copies the object, but nested objects are still shared by reference.<br><strong>Deep</strong>: recursively copies all nested objects.</p>
+<pre><code>const a = { x: 1, nested: { y: 2 } };
+const shallow = {...a};
+shallow.nested.y = 99; // also mutates a.nested.y!
+const deep = JSON.parse(JSON.stringify(a));</code></pre></div></details>
+
+<details class="qa"><summary>What is "this" in OOP?</summary>
+<div class="qa-body"><p>A reference to the current instance — the object the method was called on. In JS its value depends on how the function was called (gotcha!). In Java/C# it's always the current instance.</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: SOLID ============
+CONTENT.solid = `
+<h1>SOLID Principles</h1>
+<p class="lead">Five principles for writing maintainable, extensible OOP code. Coined by Robert C. Martin (Uncle Bob).</p>
+
+<h2>S — Single Responsibility Principle</h2>
+<p>A class should have one and only one reason to change.</p>
+<div class="grid2">
+<div class="card">
+<strong>❌ Violates SRP</strong>
+<pre><code>class User {
+  save(){ db.save(this); }
+  sendEmail(){ smtp.send(...); }
+  validate(){ /* ... */ }
+}</code></pre>
+<p>Mixes persistence, communication, validation.</p>
+</div>
+<div class="card">
+<strong>✅ Follows SRP</strong>
+<pre><code>class User { /* data */ }
+class UserRepository { save(u){} }
+class UserMailer { send(u){} }
+class UserValidator { check(u){} }</code></pre>
+</div>
+</div>
+
+<h2>O — Open/Closed Principle</h2>
+<p>Open for extension, closed for modification. You should be able to add new behavior without changing existing code.</p>
+<pre><code><span class="c">// ❌ have to edit area() every time you add a shape</span>
+function area(shape){
+  if (shape.type === <span class="s">"circle"</span>) return Math.PI * shape.r ** <span class="n">2</span>;
+  if (shape.type === <span class="s">"square"</span>) return shape.side ** <span class="n">2</span>;
+}
+
+<span class="c">// ✅ extensible via polymorphism</span>
+class Shape { area(){ throw <span class="s">"abstract"</span>; } }
+class Circle <span class="k">extends</span> Shape { constructor(r){ super(); this.r = r; } area(){ return Math.PI * this.r ** <span class="n">2</span>; } }
+class Square <span class="k">extends</span> Shape { constructor(s){ super(); this.s = s; } area(){ return this.s ** <span class="n">2</span>; } }
+<span class="c">// Add Triangle by creating new class — no edit needed</span></code></pre>
+
+<h2>L — Liskov Substitution Principle</h2>
+<p>Subclasses should be substitutable for their base class without breaking the program.</p>
+<pre><code><span class="c">// ❌ Square breaks Rectangle's contract</span>
+class Rectangle {
+  setWidth(w){ this.w = w; }
+  setHeight(h){ this.h = h; }
+  area(){ return this.w * this.h; }
+}
+class Square <span class="k">extends</span> Rectangle {
+  setWidth(w){ this.w = w; this.h = w; }   <span class="c">// surprise!</span>
+  setHeight(h){ this.h = h; this.w = h; }
+}
+
+function resize(r){
+  r.setWidth(5); r.setHeight(10);
+  console.log(r.area());  <span class="c">// expect 50, get 100 for Square</span>
+}</code></pre>
+
+<h2>I — Interface Segregation Principle</h2>
+<p>Many small interfaces are better than one big one. Don't force clients to depend on methods they don't use.</p>
+<pre><code><span class="c">// ❌ one fat interface</span>
+interface Worker {
+  work(); eat(); sleep();
+}
+class Robot implements Worker {
+  work(){}
+  eat(){ throw <span class="s">"robots don't eat"</span>; }
+  sleep(){ throw <span class="s">"robots don't sleep"</span>; }
+}
+
+<span class="c">// ✅ split</span>
+interface Workable { work(); }
+interface Eatable { eat(); }
+interface Sleepable { sleep(); }
+class Robot implements Workable {}
+class Human implements Workable, Eatable, Sleepable {}</code></pre>
+
+<h2>D — Dependency Inversion Principle</h2>
+<p>Depend on abstractions, not concretions. High-level modules shouldn't depend on low-level modules directly.</p>
+<pre><code><span class="c">// ❌ tightly coupled</span>
+class OrderService {
+  constructor(){ this.db = <span class="k">new</span> MySQLDatabase(); }
+}
+
+<span class="c">// ✅ inject the dependency</span>
+class OrderService {
+  constructor(db){ this.db = db; }  <span class="c">// takes any DB that conforms</span>
+}
+<span class="k">new</span> OrderService(<span class="k">new</span> MySQLDatabase());
+<span class="k">new</span> OrderService(<span class="k">new</span> MockDatabase()); <span class="c">// easy testing</span></code></pre>
+
+<h2>Quiz</h2>
+<div class="quiz" data-correct="0">
+  <strong>Q: Which principle says "a class should have only one reason to change"?</strong>
+  <div class="opts">
+    <div class="opt">Single Responsibility</div>
+    <div class="opt">Open/Closed</div>
+    <div class="opt">Liskov Substitution</div>
+    <div class="opt">Dependency Inversion</div>
+  </div>
+  <div class="expl">SRP — Single Responsibility Principle.</div>
+</div>
+
+<div class="quiz" data-correct="3">
+  <strong>Q: Injecting a database via the constructor instead of <code>new</code>-ing it inside is an example of?</strong>
+  <div class="opts">
+    <div class="opt">Single Responsibility</div>
+    <div class="opt">Interface Segregation</div>
+    <div class="opt">Liskov Substitution</div>
+    <div class="opt">Dependency Inversion</div>
+  </div>
+  <div class="expl">DIP — depend on abstraction (the DB interface), not concretion (MySQLDatabase).</div>
+</div>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>Why do we need SOLID?</summary>
+<div class="qa-body"><p>To produce code that's easy to maintain, extend, and test. Without SOLID, codebases become tangled — every change breaks something else.</p></div></details>
+
+<details class="qa"><summary>Is SOLID always the right choice?</summary>
+<div class="qa-body"><p>No. For small scripts/throwaway code, strict SOLID adds overhead. For long-lived production systems, the upfront cost pays back many times over.</p></div></details>
+
+<details class="qa"><summary>What's "tight coupling" vs "loose coupling"?</summary>
+<div class="qa-body"><p>Tight: classes know each other's internals or specific types. Loose: classes interact through abstractions/interfaces. Loose coupling = easier to test, swap, and maintain.</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: DESIGN PATTERNS ============
+CONTENT.patterns = `
+<h1>Design Patterns</h1>
+<p class="lead">Reusable solutions to common design problems. Categorized as Creational, Structural, and Behavioral. You don't need to memorize all 23 — focus on the common ones.</p>
+
+<h2>Creational Patterns</h2>
+
+<h3>Singleton</h3>
+<p>Ensures only one instance of a class exists.</p>
+<pre><code>class Logger {
+  static instance = null;
+  static getInstance(){
+    if (!Logger.instance) Logger.instance = new Logger();
+    return Logger.instance;
+  }
+  log(msg){ console.log(<span class="s">\`[LOG] \${msg}\`</span>); }
+}
+Logger.getInstance().log(<span class="s">"hi"</span>);</code></pre>
+<p><strong>Use for:</strong> config, logger, DB connection. <strong>Watch out:</strong> hard to test, hidden global state.</p>
+
+<h3>Factory Method</h3>
+<p>Creates objects without exposing instantiation logic.</p>
+<pre><code>class ShapeFactory {
+  static create(type){
+    switch(type){
+      case <span class="s">"circle"</span>: return new Circle();
+      case <span class="s">"square"</span>: return new Square();
+      default: throw new Error(<span class="s">"unknown"</span>);
+    }
+  }
+}
+const s = ShapeFactory.create(<span class="s">"circle"</span>);</code></pre>
+
+<h3>Builder</h3>
+<p>Constructs complex objects step by step.</p>
+<pre><code>class QueryBuilder {
+  constructor(){ this.parts = {}; }
+  select(f){ this.parts.select = f; return this; }
+  from(t){ this.parts.from = t; return this; }
+  where(c){ this.parts.where = c; return this; }
+  build(){ return <span class="s">\`SELECT \${this.parts.select} FROM \${this.parts.from} WHERE \${this.parts.where}\`</span>; }
+}
+
+new QueryBuilder().select(<span class="s">"*"</span>).from(<span class="s">"users"</span>).where(<span class="s">"id=1"</span>).build();</code></pre>
+
+<h2>Structural Patterns</h2>
+
+<h3>Adapter</h3>
+<p>Lets incompatible interfaces work together.</p>
+<pre><code>class OldPrinter { printOld(text){ console.log(text); } }
+
+<span class="c">// new code expects printer.print()</span>
+class PrinterAdapter {
+  constructor(old){ this.old = old; }
+  print(text){ this.old.printOld(text); }
+}</code></pre>
+
+<h3>Decorator</h3>
+<p>Adds behavior to objects dynamically without altering their class.</p>
+<pre><code>function withLogging(fn){
+  return function(...args){
+    console.log(<span class="s">"calling"</span>, fn.name, args);
+    const r = fn(...args);
+    console.log(<span class="s">"returned"</span>, r);
+    return r;
+  };
+}
+
+const add = (a, b) =&gt; a + b;
+const loggedAdd = withLogging(add);
+loggedAdd(<span class="n">2</span>, <span class="n">3</span>);</code></pre>
+
+<h3>Facade</h3>
+<p>Provides a simple interface to a complex subsystem.</p>
+<pre><code>class HomeTheater {
+  constructor(){ this.tv=...; this.amp=...; this.lights=...; this.bluray=...; }
+  watchMovie(movie){
+    this.lights.dim();
+    this.amp.on();
+    this.amp.setVolume(<span class="n">11</span>);
+    this.tv.on();
+    this.bluray.play(movie);
+  }
+}</code></pre>
+
+<h2>Behavioral Patterns</h2>
+
+<h3>Observer (Pub/Sub)</h3>
+<p>Notifies multiple objects when something changes.</p>
+<pre><code>class EventBus {
+  constructor(){ this.listeners = {}; }
+  on(event, fn){ (this.listeners[event] ||= []).push(fn); }
+  emit(event, data){ (this.listeners[event] || []).forEach(fn =&gt; fn(data)); }
+}
+
+const bus = new EventBus();
+bus.on(<span class="s">"user-signup"</span>, u =&gt; console.log(<span class="s">"welcome"</span>, u));
+bus.on(<span class="s">"user-signup"</span>, u =&gt; sendEmail(u));
+bus.emit(<span class="s">"user-signup"</span>, { name: <span class="s">"Lahiru"</span> });</code></pre>
+
+<h3>Strategy</h3>
+<p>Encapsulates interchangeable algorithms.</p>
+<pre><code>class Sorter {
+  constructor(strategy){ this.strategy = strategy; }
+  sort(arr){ return this.strategy(arr); }
+}
+
+const quick = arr =&gt; [...arr].sort((a,b) =&gt; a - b);
+const reverse = arr =&gt; [...arr].sort((a,b) =&gt; b - a);
+
+new Sorter(quick).sort([<span class="n">3</span>,<span class="n">1</span>,<span class="n">2</span>]);
+new Sorter(reverse).sort([<span class="n">3</span>,<span class="n">1</span>,<span class="n">2</span>]);</code></pre>
+
+<h3>Iterator</h3>
+<p>Sequentially access elements of a collection without exposing its structure. Built into JS (<code>Symbol.iterator</code>), Java (<code>Iterable</code>), Python (<code>__iter__</code>).</p>
+
+<h3>Command</h3>
+<p>Encapsulates a request as an object — enables undo/redo, queueing.</p>
+<pre><code>class AddCommand {
+  constructor(receiver, value){ this.r = receiver; this.v = value; }
+  execute(){ this.r.add(this.v); }
+  undo(){ this.r.subtract(this.v); }
+}</code></pre>
+
+<h2>Quick Quiz</h2>
+<div class="quiz" data-correct="1">
+  <strong>Q: Which pattern would you use for a notification system where many parts of the app react to a state change?</strong>
+  <div class="opts">
+    <div class="opt">Singleton</div>
+    <div class="opt">Observer</div>
+    <div class="opt">Adapter</div>
+    <div class="opt">Builder</div>
+  </div>
+  <div class="expl">Observer (Pub/Sub) — one subject notifies many observers when its state changes.</div>
+</div>
+
+<div class="quiz" data-correct="2">
+  <strong>Q: You want one and only one database connection across your app. Which pattern?</strong>
+  <div class="opts">
+    <div class="opt">Factory</div>
+    <div class="opt">Builder</div>
+    <div class="opt">Singleton</div>
+    <div class="opt">Strategy</div>
+  </div>
+  <div class="expl">Singleton — ensures a class has only one instance and provides global access to it.</div>
+</div>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>What's the difference between Factory and Builder?</summary>
+<div class="qa-body"><p><strong>Factory</strong>: creates a single complete object based on type. <strong>Builder</strong>: constructs a complex object step-by-step, often with many optional parts.</p></div></details>
+
+<details class="qa"><summary>Why are Singletons criticized?</summary>
+<div class="qa-body"><p>They're global state in disguise. They make unit testing hard (can't easily mock or reset), hide dependencies, and create tight coupling.</p></div></details>
+
+<details class="qa"><summary>Decorator vs Adapter?</summary>
+<div class="qa-body"><p>Adapter changes one interface into another. Decorator keeps the same interface but adds behavior.</p></div></details>
+
+<details class="qa"><summary>What's the most overused pattern?</summary>
+<div class="qa-body"><p>Singleton — often used when a plain module or DI would be cleaner. "Just use a singleton" is often code smell for "I don't want to think about lifecycle."</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: DATABASE & SQL ============
+CONTENT.db = `
+<h1>Database &amp; SQL</h1>
+<p class="lead">Almost every backend role asks SQL basics. Joins, normalization, indexes, transactions — these come up in every entry-level interview.</p>
+
+<h2>Relational vs NoSQL</h2>
+<table>
+<tr><th></th><th>Relational (SQL)</th><th>NoSQL</th></tr>
+<tr><td>Schema</td><td>Rigid, predefined</td><td>Flexible</td></tr>
+<tr><td>Examples</td><td>PostgreSQL, MySQL, Oracle</td><td>MongoDB, Redis, Cassandra, DynamoDB</td></tr>
+<tr><td>Joins</td><td>First-class</td><td>Limited / app-side</td></tr>
+<tr><td>Transactions</td><td>ACID</td><td>Often BASE / eventually consistent</td></tr>
+<tr><td>Scaling</td><td>Vertical mostly</td><td>Horizontal native</td></tr>
+</table>
+
+<h2>SQL fundamentals</h2>
+
+<h3>Basic queries</h3>
+<pre><code><span class="k">SELECT</span> name, email
+<span class="k">FROM</span> users
+<span class="k">WHERE</span> active = <span class="k">true</span> <span class="k">AND</span> age &gt; <span class="n">18</span>
+<span class="k">ORDER BY</span> created_at <span class="k">DESC</span>
+<span class="k">LIMIT</span> <span class="n">10</span>;</code></pre>
+
+<h3>Aggregate functions</h3>
+<pre><code><span class="k">SELECT</span> department, <span class="f">COUNT</span>(*) <span class="k">AS</span> headcount, <span class="f">AVG</span>(salary) <span class="k">AS</span> avg_salary
+<span class="k">FROM</span> employees
+<span class="k">GROUP BY</span> department
+<span class="k">HAVING</span> <span class="f">COUNT</span>(*) &gt; <span class="n">5</span>;</code></pre>
+<p><strong>WHERE</strong> filters rows before aggregation. <strong>HAVING</strong> filters groups after.</p>
+
+<h2>Joins</h2>
+<div class="card">
+<table>
+<tr><th>Join</th><th>Returns</th></tr>
+<tr><td>INNER JOIN</td><td>Rows where both sides match</td></tr>
+<tr><td>LEFT JOIN</td><td>All left rows + matching right (NULL if none)</td></tr>
+<tr><td>RIGHT JOIN</td><td>All right rows + matching left</td></tr>
+<tr><td>FULL OUTER JOIN</td><td>All rows from both sides</td></tr>
+<tr><td>CROSS JOIN</td><td>Cartesian product</td></tr>
+</table>
+</div>
+<pre><code><span class="k">SELECT</span> u.name, o.total
+<span class="k">FROM</span> users u
+<span class="k">LEFT JOIN</span> orders o <span class="k">ON</span> o.user_id = u.id
+<span class="k">WHERE</span> o.total &gt; <span class="n">100</span> <span class="k">OR</span> o.id <span class="k">IS NULL</span>;</code></pre>
+
+<h2>Indexes</h2>
+<p>Speed up reads on specific columns by maintaining a sorted structure (usually B-tree).</p>
+<pre><code><span class="k">CREATE INDEX</span> idx_users_email <span class="k">ON</span> users(email);
+
+<span class="c">-- composite — order matters</span>
+<span class="k">CREATE INDEX</span> idx_users_active_email <span class="k">ON</span> users(active, email);</code></pre>
+<ul>
+  <li><strong>Pro:</strong> O(log n) lookups vs O(n) scans</li>
+  <li><strong>Con:</strong> slows writes, uses disk space</li>
+  <li><strong>Rule:</strong> index columns in WHERE, JOIN, ORDER BY</li>
+</ul>
+
+<h2>Normalization (1NF, 2NF, 3NF)</h2>
+<ul>
+  <li><strong>1NF</strong> — atomic values, no repeating groups</li>
+  <li><strong>2NF</strong> — 1NF + no partial dependencies on composite keys</li>
+  <li><strong>3NF</strong> — 2NF + no transitive dependencies</li>
+</ul>
+<p>Denormalization (storing redundant data) trades disk space for read speed — common in read-heavy systems.</p>
+
+<h2>Transactions &amp; ACID</h2>
+<ul>
+  <li><strong>Atomicity</strong> — all or nothing</li>
+  <li><strong>Consistency</strong> — DB moves from one valid state to another</li>
+  <li><strong>Isolation</strong> — concurrent transactions don't see each other's intermediate state</li>
+  <li><strong>Durability</strong> — committed changes survive crashes</li>
+</ul>
+<pre><code><span class="k">BEGIN</span>;
+<span class="k">UPDATE</span> accounts <span class="k">SET</span> balance = balance - <span class="n">100</span> <span class="k">WHERE</span> id = <span class="n">1</span>;
+<span class="k">UPDATE</span> accounts <span class="k">SET</span> balance = balance + <span class="n">100</span> <span class="k">WHERE</span> id = <span class="n">2</span>;
+<span class="k">COMMIT</span>;</code></pre>
+
+<h2>Common interview questions</h2>
+
+<h3>Find the 2nd highest salary</h3>
+<pre><code><span class="k">SELECT MAX</span>(salary) <span class="k">FROM</span> employees
+<span class="k">WHERE</span> salary &lt; (<span class="k">SELECT MAX</span>(salary) <span class="k">FROM</span> employees);
+
+<span class="c">-- or with window function</span>
+<span class="k">SELECT DISTINCT</span> salary <span class="k">FROM</span> (
+  <span class="k">SELECT</span> salary, <span class="f">DENSE_RANK</span>() <span class="k">OVER</span> (<span class="k">ORDER BY</span> salary <span class="k">DESC</span>) <span class="k">AS</span> rnk
+  <span class="k">FROM</span> employees
+) t <span class="k">WHERE</span> rnk = <span class="n">2</span>;</code></pre>
+
+<h3>Find duplicates</h3>
+<pre><code><span class="k">SELECT</span> email, <span class="f">COUNT</span>(*) <span class="k">FROM</span> users
+<span class="k">GROUP BY</span> email
+<span class="k">HAVING</span> <span class="f">COUNT</span>(*) &gt; <span class="n">1</span>;</code></pre>
+
+<h3>Delete duplicates keeping lowest id</h3>
+<pre><code><span class="k">DELETE FROM</span> users
+<span class="k">WHERE</span> id <span class="k">NOT IN</span> (
+  <span class="k">SELECT MIN</span>(id) <span class="k">FROM</span> users <span class="k">GROUP BY</span> email
+);</code></pre>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>WHERE vs HAVING?</summary>
+<div class="qa-body"><p>WHERE filters rows before grouping. HAVING filters groups after aggregation. You can't use aggregates in WHERE.</p></div></details>
+
+<details class="qa"><summary>What's a primary key vs foreign key vs unique key?</summary>
+<div class="qa-body"><p><strong>Primary</strong>: uniquely identifies a row, can't be NULL, one per table. <strong>Foreign</strong>: references a PK in another table — enforces referential integrity. <strong>Unique</strong>: enforces uniqueness, allows NULLs, can have multiple per table.</p></div></details>
+
+<details class="qa"><summary>DELETE vs TRUNCATE vs DROP?</summary>
+<div class="qa-body"><p><strong>DELETE</strong>: removes rows, can be filtered, logged, rolled back. <strong>TRUNCATE</strong>: removes all rows fast, can't be filtered, often can't be rolled back. <strong>DROP</strong>: removes the table entirely.</p></div></details>
+
+<details class="qa"><summary>What's an N+1 query problem?</summary>
+<div class="qa-body"><p>Fetching a list (1 query) then making 1 query per item to load related data → N+1 total queries. Fix with eager loading / JOIN / IN-query.</p></div></details>
+
+<details class="qa"><summary>Why use stored procedures?</summary>
+<div class="qa-body"><p>Encapsulate logic in the DB, reduce network round-trips, control access (grant exec only). Downsides: hard to version-control and test compared to app code.</p></div></details>
+
+<details class="qa"><summary>What is CAP theorem?</summary>
+<div class="qa-body"><p>A distributed system can have at most 2 of: <strong>Consistency</strong> (all nodes see same data), <strong>Availability</strong> (every request gets a response), <strong>Partition tolerance</strong> (works despite network splits). In practice you pick CP or AP since network partitions are inevitable.</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: SYSTEM DESIGN ============
+CONTENT.sysdesign = `
+<h1>System Design Basics</h1>
+<p class="lead">Entry-level interviews don't expect a senior engineer's depth — but knowing vocabulary and basic tradeoffs makes a huge impression.</p>
+
+<h2>Core building blocks</h2>
+
+<h3>Client → Load Balancer → Servers → Database</h3>
+<pre><code>             ┌──────────┐
+   client ──▶│   LB     │──┬──▶ server 1 ──┐
+             └──────────┘  ├──▶ server 2 ──┼──▶ DB
+                           └──▶ server 3 ──┘
+                                  │
+                                  └──▶ cache (Redis)</code></pre>
+
+<h2>Vertical vs Horizontal scaling</h2>
+<ul>
+  <li><strong>Vertical (scale up)</strong> — bigger server (more CPU/RAM). Simple but limited.</li>
+  <li><strong>Horizontal (scale out)</strong> — more servers. Requires stateless services and a load balancer.</li>
+</ul>
+
+<h2>Load balancer</h2>
+<p>Distributes traffic across multiple servers. Strategies:</p>
+<ul>
+  <li><strong>Round robin</strong> — rotate through servers</li>
+  <li><strong>Least connections</strong> — pick server with fewest active conns</li>
+  <li><strong>IP hash</strong> — consistent server per client</li>
+</ul>
+
+<h2>Caching</h2>
+<p>Store frequently-accessed data closer to the request to reduce latency and load.</p>
+<ul>
+  <li><strong>Browser cache</strong> — HTTP headers</li>
+  <li><strong>CDN</strong> — geographically distributed static asset cache</li>
+  <li><strong>Application cache</strong> — in-memory (Redis, Memcached)</li>
+  <li><strong>Database cache</strong> — query result cache</li>
+</ul>
+<p><strong>Cache invalidation</strong> is famously hard. Strategies: TTL, write-through, write-behind, cache-aside.</p>
+
+<h2>Database scaling</h2>
+<ul>
+  <li><strong>Read replicas</strong> — copy data to read-only nodes (eventual consistency)</li>
+  <li><strong>Sharding</strong> — partition data across machines (by user_id range, by hash, geo)</li>
+  <li><strong>Indexing</strong> — speed up reads on hot columns</li>
+</ul>
+
+<h2>Message queues</h2>
+<p>Decouple producers from consumers (async). Examples: Kafka, RabbitMQ, SQS.</p>
+<pre><code>web server  ──[ enqueue ]──▶ queue ──[ dequeue ]──▶ worker
+(returns 202 immediately)                            (does the heavy work)</code></pre>
+
+<h2>HTTP &amp; REST basics</h2>
+<table>
+<tr><th>Method</th><th>Purpose</th><th>Idempotent?</th></tr>
+<tr><td>GET</td><td>Read</td><td>Yes</td></tr>
+<tr><td>POST</td><td>Create</td><td>No</td></tr>
+<tr><td>PUT</td><td>Replace</td><td>Yes</td></tr>
+<tr><td>PATCH</td><td>Partial update</td><td>Usually</td></tr>
+<tr><td>DELETE</td><td>Remove</td><td>Yes</td></tr>
+</table>
+
+<h3>Status codes you should know</h3>
+<ul>
+  <li><strong>2xx</strong> — Success (200 OK, 201 Created, 204 No Content)</li>
+  <li><strong>3xx</strong> — Redirect (301 Permanent, 302 Found, 304 Not Modified)</li>
+  <li><strong>4xx</strong> — Client error (400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 429 Too Many Requests)</li>
+  <li><strong>5xx</strong> — Server error (500 Internal Server Error, 502 Bad Gateway, 503 Service Unavailable)</li>
+</ul>
+
+<h2>REST vs GraphQL vs gRPC</h2>
+<table>
+<tr><th></th><th>REST</th><th>GraphQL</th><th>gRPC</th></tr>
+<tr><td>Transport</td><td>HTTP+JSON</td><td>HTTP+JSON</td><td>HTTP/2+Protobuf</td></tr>
+<tr><td>Schema</td><td>Loose</td><td>Strict</td><td>Strict</td></tr>
+<tr><td>Over/under-fetching</td><td>Common</td><td>Solved (pick fields)</td><td>Less</td></tr>
+<tr><td>Best for</td><td>Public APIs</td><td>Complex client needs</td><td>Internal microservices</td></tr>
+</table>
+
+<h2>Authentication 101</h2>
+<ul>
+  <li><strong>Session cookies</strong> — server stores session, browser sends cookie</li>
+  <li><strong>JWT</strong> — signed token, stateless on server, decoded on client</li>
+  <li><strong>OAuth 2.0</strong> — "log in with Google" — delegated authorization</li>
+</ul>
+
+<h2>Common tradeoffs to mention</h2>
+<ul>
+  <li>Consistency vs availability (CAP)</li>
+  <li>Latency vs throughput</li>
+  <li>Read-heavy vs write-heavy systems</li>
+  <li>Normalization vs denormalization</li>
+  <li>Sync vs async processing</li>
+</ul>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>Walk me through what happens when you type a URL in the browser.</summary>
+<div class="qa-body"><ol>
+<li>DNS resolves the domain to an IP</li>
+<li>TCP handshake (then TLS for HTTPS)</li>
+<li>Browser sends an HTTP request</li>
+<li>Load balancer routes to a server</li>
+<li>Server processes (may hit cache, DB)</li>
+<li>Returns HTML</li>
+<li>Browser parses HTML, fetches JS/CSS/images</li>
+<li>Renders the page</li>
+</ol></div></details>
+
+<details class="qa"><summary>How would you design URL shortener (tinyurl)?</summary>
+<div class="qa-body"><p>Generate short ID (base62 of incrementing counter or hash). Store {short → long} in DB. Redirect on lookup. Add caching for hot URLs. For scale: sharded DB, CDN for popular short links.</p></div></details>
+
+<details class="qa"><summary>What's the difference between TCP and UDP?</summary>
+<div class="qa-body"><p>TCP: connection-oriented, reliable, ordered, slower. Used for HTTP, email, file transfer. UDP: connectionless, fast, no guarantees. Used for video calls, gaming, DNS.</p></div></details>
+
+<details class="qa"><summary>Stateless vs stateful?</summary>
+<div class="qa-body"><p>Stateless: server doesn't remember client between requests (each request carries auth). Easy to scale horizontally. Stateful: server keeps session in memory — harder to scale, needs sticky sessions or shared store (Redis).</p></div></details>
+
+<details class="qa"><summary>What's a microservice?</summary>
+<div class="qa-body"><p>An app split into small, independently deployable services that communicate over network (REST/gRPC/queue). Pros: independent scaling, tech choice, team ownership. Cons: distributed system complexity, latency, debugging.</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: GIT ============
+CONTENT.git = `
+<h1>Git Basics</h1>
+<p class="lead">Every SE job uses git. Knowing more than <code>commit</code> and <code>push</code> sets you apart.</p>
+
+<h2>Mental model</h2>
+<pre><code>working dir  ──[ git add ]──▶  staging area  ──[ git commit ]──▶  local repo  ──[ git push ]──▶  remote repo
+   (your files)               (snapshot to commit)             (commit history)                (GitHub etc.)</code></pre>
+
+<h2>Essential commands</h2>
+<pre><code><span class="c"># start</span>
+git init
+git clone &lt;url&gt;
+
+<span class="c"># daily flow</span>
+git status
+git add &lt;file&gt;          <span class="c"># stage</span>
+git add .               <span class="c"># stage all</span>
+git commit -m "msg"
+git push origin main
+
+<span class="c"># branches</span>
+git branch                          <span class="c"># list</span>
+git branch feature/x                <span class="c"># create</span>
+git checkout feature/x              <span class="c"># switch</span>
+git checkout -b feature/x           <span class="c"># create + switch</span>
+git switch feature/x                <span class="c"># newer way</span>
+
+<span class="c"># sync</span>
+git pull                <span class="c"># fetch + merge</span>
+git fetch               <span class="c"># just download, don't merge</span>
+
+<span class="c"># history</span>
+git log
+git log --oneline --graph --all
+git diff
+git diff --staged</code></pre>
+
+<h2>Merging vs Rebasing</h2>
+<div class="grid2">
+<div class="card">
+<h3>Merge</h3>
+<pre><code>git checkout main
+git merge feature</code></pre>
+<p>Creates a merge commit. Preserves history exactly as it happened.</p>
+</div>
+<div class="card">
+<h3>Rebase</h3>
+<pre><code>git checkout feature
+git rebase main</code></pre>
+<p>Rewrites commits on top of main. Cleaner linear history.</p>
+</div>
+</div>
+<div class="warn">❌ Never rebase commits that have been pushed and shared — it rewrites history and breaks teammates' branches.</div>
+
+<h2>Undoing things</h2>
+<pre><code><span class="c"># unstage a file</span>
+git reset HEAD &lt;file&gt;
+
+<span class="c"># discard changes in a file</span>
+git checkout -- &lt;file&gt;       <span class="c"># older</span>
+git restore &lt;file&gt;            <span class="c"># newer</span>
+
+<span class="c"># undo last commit but keep changes staged</span>
+git reset --soft HEAD~1
+
+<span class="c"># undo last commit AND discard changes (destructive!)</span>
+git reset --hard HEAD~1
+
+<span class="c"># revert a commit (safe — makes a new commit that undoes it)</span>
+git revert &lt;hash&gt;
+
+<span class="c"># amend last commit (don't use if pushed)</span>
+git commit --amend</code></pre>
+
+<h2>Stash</h2>
+<pre><code>git stash                <span class="c"># save WIP</span>
+git stash list
+git stash pop            <span class="c"># reapply &amp; remove</span>
+git stash apply          <span class="c"># reapply &amp; keep</span>
+git stash drop</code></pre>
+
+<h2>Resolving conflicts</h2>
+<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+your local change
+=======
+incoming change from main
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; main</code></pre>
+<p>Edit the file to keep what you want, remove the markers, then:</p>
+<pre><code>git add &lt;file&gt;
+git commit       <span class="c"># or: git rebase --continue</span></code></pre>
+
+<h2>.gitignore</h2>
+<pre><code>node_modules/
+.env
+*.log
+.DS_Store
+dist/</code></pre>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>git fetch vs git pull?</summary>
+<div class="qa-body"><p>fetch downloads remote changes without applying them. pull = fetch + merge (or fetch + rebase if configured).</p></div></details>
+
+<details class="qa"><summary>git reset vs git revert?</summary>
+<div class="qa-body"><p>reset moves the branch pointer backward — rewrites history. revert creates a new commit that undoes another — keeps history. Use revert on shared branches.</p></div></details>
+
+<details class="qa"><summary>What's a fast-forward merge?</summary>
+<div class="qa-body"><p>When the target branch has no new commits since the source diverged — git just moves the pointer forward. No merge commit needed.</p></div></details>
+
+<details class="qa"><summary>What's a detached HEAD?</summary>
+<div class="qa-body"><p>You've checked out a specific commit instead of a branch. Any commits you make won't belong to any branch and may be lost. Fix: <code>git switch -c new-branch</code>.</p></div></details>
+
+<details class="qa"><summary>What's a Pull Request / Merge Request?</summary>
+<div class="qa-body"><p>A way to propose changes from one branch to another (e.g., feature → main). Allows code review, automated checks (CI), discussion before merging.</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: WEB BASICS ============
+CONTENT.web = `
+<h1>Web Basics</h1>
+<p class="lead">HTML/CSS/JS, HTTP, browser, REST — the bread and butter of any web-facing role.</p>
+
+<h2>HTML / CSS / JS — roles</h2>
+<ul>
+  <li><strong>HTML</strong> — structure (content, semantic meaning)</li>
+  <li><strong>CSS</strong> — presentation (layout, color, animation)</li>
+  <li><strong>JavaScript</strong> — behavior (interactivity, data, logic)</li>
+</ul>
+
+<h2>The Box Model</h2>
+<pre><code>┌────────────────────────────┐ margin
+│ ┌──────────────────────┐   │
+│ │ border               │   │
+│ │ ┌──────────────────┐ │   │
+│ │ │ padding          │ │   │
+│ │ │ ┌──────────────┐ │ │   │
+│ │ │ │ content      │ │ │   │
+│ │ │ └──────────────┘ │ │   │
+│ │ └──────────────────┘ │   │
+│ └──────────────────────┘   │
+└────────────────────────────┘</code></pre>
+<p><code>box-sizing: border-box</code> includes padding+border in width (much saner default).</p>
+
+<h2>Flexbox vs Grid</h2>
+<ul>
+  <li><strong>Flexbox</strong> — 1D layout (row OR column)</li>
+  <li><strong>Grid</strong> — 2D layout (rows AND columns)</li>
+</ul>
+<pre><code>.container { display: flex; gap: 12px; justify-content: space-between; }
+.grid { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 12px; }</code></pre>
+
+<h2>JavaScript essentials</h2>
+
+<h3>var / let / const</h3>
+<ul>
+  <li><code>var</code> — function-scoped, hoisted, can be redeclared (avoid)</li>
+  <li><code>let</code> — block-scoped, can be reassigned</li>
+  <li><code>const</code> — block-scoped, can't be reassigned (but object contents can mutate)</li>
+</ul>
+
+<h3>== vs ===</h3>
+<pre><code>0 == <span class="s">""</span>      <span class="c">// true  — type coercion</span>
+0 === <span class="s">""</span>     <span class="c">// false — strict equality</span>
+
+<span class="c">// Always use === unless you specifically want coercion.</span></code></pre>
+
+<h3>Functions</h3>
+<pre><code><span class="c">// Function declaration — hoisted</span>
+<span class="k">function</span> <span class="f">greet</span>(name){ <span class="k">return</span> <span class="s">\`hi \${name}\`</span>; }
+
+<span class="c">// Arrow function — no own this/arguments</span>
+<span class="k">const</span> <span class="f">greet</span> = name =&gt; <span class="s">\`hi \${name}\`</span>;</code></pre>
+
+<h3>Async / await</h3>
+<pre><code><span class="k">async function</span> <span class="f">getUsers</span>(){
+  <span class="k">try</span> {
+    <span class="k">const</span> res = <span class="k">await</span> fetch(<span class="s">"/api/users"</span>);
+    <span class="k">if</span> (!res.ok) <span class="k">throw new</span> Error(<span class="s">"HTTP "</span> + res.status);
+    <span class="k">return</span> <span class="k">await</span> res.json();
+  } <span class="k">catch</span> (e){
+    console.error(e);
+    <span class="k">return</span> [];
+  }
+}</code></pre>
+
+<h3>Event loop</h3>
+<p>JS is single-threaded. The event loop runs tasks from queues:</p>
+<ol>
+  <li>Run synchronous code (call stack)</li>
+  <li>Run all microtasks (Promise.then, queueMicrotask)</li>
+  <li>Render</li>
+  <li>Run one macrotask (setTimeout, click handler)</li>
+  <li>Repeat</li>
+</ol>
+<pre><code>console.log(<span class="s">"A"</span>);
+setTimeout(() =&gt; console.log(<span class="s">"B"</span>), <span class="n">0</span>);
+Promise.resolve().then(() =&gt; console.log(<span class="s">"C"</span>));
+console.log(<span class="s">"D"</span>);
+
+<span class="c">// Output: A D C B</span></code></pre>
+
+<h2>HTTP basics</h2>
+<p>Stateless request/response protocol. Built on TCP (or QUIC for HTTP/3).</p>
+<pre><code>GET /users/42 HTTP/1.1
+Host: api.example.com
+Accept: application/json
+Authorization: Bearer eyJ...
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 42
+
+{"id": 42, "name": "Lahiru"}</code></pre>
+
+<h2>CORS</h2>
+<p>Browsers block cross-origin requests by default. Server must opt in via <code>Access-Control-Allow-Origin</code> headers.</p>
+
+<h2>Q&amp;A</h2>
+<details class="qa"><summary>Cookie vs Local Storage vs Session Storage?</summary>
+<div class="qa-body"><p><strong>Cookie</strong>: ~4KB, sent with every HTTP request (good for auth), can have expiry. <strong>LocalStorage</strong>: ~5MB, persists until manually cleared, JS-only. <strong>SessionStorage</strong>: same as localStorage but cleared when tab closes.</p></div></details>
+
+<details class="qa"><summary>What's the DOM?</summary>
+<div class="qa-body"><p>Document Object Model — a tree representation of an HTML document. JS manipulates this tree to update the page.</p></div></details>
+
+<details class="qa"><summary>What's a closure?</summary>
+<div class="qa-body"><p>A function that remembers variables from its enclosing scope even after that scope has finished.</p>
+<pre><code>function counter(){
+  let n = 0;
+  return () =&gt; ++n;
+}
+const c = counter();
+c(); c(); c();  // 1, 2, 3 — n is "closed over"</code></pre></div></details>
+
+<details class="qa"><summary>Synchronous vs Asynchronous?</summary>
+<div class="qa-body"><p>Sync: each step waits for the previous to finish. Async: kick off work and continue; handle the result later (callback, Promise, await). Browsers and Node.js are heavily async to avoid blocking the event loop.</p></div></details>
+
+<details class="qa"><summary>What is a Promise?</summary>
+<div class="qa-body"><p>An object representing the eventual result of an async operation. States: pending → fulfilled or rejected. Chain with <code>.then/.catch</code> or use <code>await</code>.</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: GENERAL Q&A ============
+CONTENT.general = `
+<h1>General Interview Questions</h1>
+<p class="lead">Common questions across CS topics. Skim these the day before your interview.</p>
+
+<h2>CS fundamentals</h2>
+
+<details class="qa"><summary>What is the difference between a process and a thread?</summary>
+<div class="qa-body"><p>A <strong>process</strong> is an instance of a program with its own memory space. A <strong>thread</strong> is a lightweight unit of execution inside a process — threads in the same process share memory.</p></div></details>
+
+<details class="qa"><summary>What's a deadlock?</summary>
+<div class="qa-body"><p>Two or more threads waiting forever for resources held by each other. Four conditions must hold: mutual exclusion, hold &amp; wait, no preemption, circular wait.</p></div></details>
+
+<details class="qa"><summary>What's a race condition?</summary>
+<div class="qa-body"><p>When two threads access shared data concurrently and the outcome depends on timing. Fix with locks, atomics, or immutable data.</p></div></details>
+
+<details class="qa"><summary>Stack vs Heap memory?</summary>
+<div class="qa-body"><p><strong>Stack</strong>: function call frames, local variables, fast, LIFO, fixed size. <strong>Heap</strong>: dynamic allocations (objects), slower, managed by GC (Java/JS) or manually (C/C++).</p></div></details>
+
+<details class="qa"><summary>What's garbage collection?</summary>
+<div class="qa-body"><p>Automatic memory management — runtime detects unreachable objects and frees them. Common algorithms: mark-and-sweep, generational, reference counting.</p></div></details>
+
+<details class="qa"><summary>What's a memory leak?</summary>
+<div class="qa-body"><p>Memory allocated but never freed even though no longer needed. In GC languages: caused by lingering references (forgotten event listeners, caches that grow forever).</p></div></details>
+
+<details class="qa"><summary>Compiled vs Interpreted languages?</summary>
+<div class="qa-body"><p>Compiled (C, Rust): source → machine code ahead of time. Fast, harder to iterate. Interpreted (Python, JS): runtime executes source. Slower, faster dev cycle. Many modern langs (Java, C#, JS) use JIT — interpret then compile hot paths.</p></div></details>
+
+<details class="qa"><summary>What is recursion's space cost?</summary>
+<div class="qa-body"><p>Each recursive call pushes a stack frame — O(depth) space, even if each frame is constant size. Deep recursion → stack overflow.</p></div></details>
+
+<details class="qa"><summary>Pass by value vs pass by reference?</summary>
+<div class="qa-body"><p>By value: function gets a copy. By reference: function gets a pointer/reference to the original. In Java/Python/JS: primitives are by value, objects are "by reference value" (the reference is copied but points to same object).</p></div></details>
+
+<details class="qa"><summary>What's the difference between an algorithm and a data structure?</summary>
+<div class="qa-body"><p>A <strong>data structure</strong> is a way to organize data (array, tree, hash). An <strong>algorithm</strong> is a procedure to solve a problem, often using one or more data structures.</p></div></details>
+
+<h2>OOP &amp; design</h2>
+
+<details class="qa"><summary>What is dependency injection?</summary>
+<div class="qa-body"><p>A pattern where dependencies are passed in (via constructor, setter, or interface) rather than created inside a class. Makes code more testable and loosely coupled.</p></div></details>
+
+<details class="qa"><summary>Cohesion vs Coupling?</summary>
+<div class="qa-body"><p><strong>Cohesion</strong>: how related/focused the responsibilities of a single module are. High = good. <strong>Coupling</strong>: how much modules depend on each other. Low = good.</p></div></details>
+
+<details class="qa"><summary>What's the difference between aggregation and composition?</summary>
+<div class="qa-body"><p>Both are "has-a" relationships. Aggregation: parts can exist independently of the whole (a Team has Players — players can exist without the team). Composition: parts only exist with the whole (a House has Rooms — rooms don't exist without the house).</p></div></details>
+
+<h2>Practical / coding</h2>
+
+<details class="qa"><summary>How would you detect if a string is a palindrome?</summary>
+<div class="qa-body"><pre><code>function isPalindrome(s){
+  s = s.toLowerCase().replace(/[^a-z0-9]/g, "");
+  let i=0, j=s.length-1;
+  while (i &lt; j){
+    if (s[i] !== s[j]) return false;
+    i++; j--;
+  }
+  return true;
+}</code></pre></div></details>
+
+<details class="qa"><summary>FizzBuzz</summary>
+<div class="qa-body"><pre><code>for (let i=1; i&lt;=100; i++){
+  let out = "";
+  if (i % 3 === 0) out += "Fizz";
+  if (i % 5 === 0) out += "Buzz";
+  console.log(out || i);
+}</code></pre></div></details>
+
+<details class="qa"><summary>How would you reverse an integer (e.g. 1234 → 4321)?</summary>
+<div class="qa-body"><pre><code>function reverseInt(n){
+  let r = 0;
+  while (n &gt; 0){
+    r = r * 10 + n % 10;
+    n = Math.floor(n / 10);
+  }
+  return r;
+}</code></pre></div></details>
+
+<details class="qa"><summary>Check if a number is prime</summary>
+<div class="qa-body"><pre><code>function isPrime(n){
+  if (n &lt; 2) return false;
+  for (let i=2; i*i &lt;= n; i++)
+    if (n % i === 0) return false;
+  return true;
+}</code></pre></div></details>
+
+<details class="qa"><summary>Fibonacci — give 3 implementations</summary>
+<div class="qa-body"><pre><code>// recursive
+const fib1 = n =&gt; n &lt; 2 ? n : fib1(n-1) + fib1(n-2);
+
+// memoized
+const fib2 = (n, m={}) =&gt; n &lt; 2 ? n : m[n] ??= fib2(n-1,m) + fib2(n-2,m);
+
+// iterative
+function fib3(n){
+  let a=0, b=1;
+  for (let i=2; i&lt;=n; i++) [a,b] = [b, a+b];
+  return n &lt; 2 ? n : b;
+}</code></pre></div></details>
+
+<h2>OS &amp; networking</h2>
+
+<details class="qa"><summary>What does an Operating System do?</summary>
+<div class="qa-body"><p>Manages hardware (CPU, memory, IO), provides abstractions (files, processes), schedules tasks, enforces security.</p></div></details>
+
+<details class="qa"><summary>What's virtual memory?</summary>
+<div class="qa-body"><p>OS gives each process its own virtual address space larger than physical RAM. Mapped to pages of physical memory; least-used pages swapped to disk.</p></div></details>
+
+<details class="qa"><summary>OSI model — name layers</summary>
+<div class="qa-body"><p>Physical, Data Link, Network, Transport, Session, Presentation, Application. Mnemonic: "Please Do Not Throw Sausage Pizza Away".</p></div></details>
+
+<details class="qa"><summary>HTTP vs HTTPS?</summary>
+<div class="qa-body"><p>HTTPS = HTTP over TLS. TLS provides encryption, integrity, and server authentication via certificates.</p></div></details>
+
+<h2>Testing</h2>
+
+<details class="qa"><summary>What's the difference between unit, integration, and end-to-end tests?</summary>
+<div class="qa-body"><p><strong>Unit</strong>: tests one function/class in isolation, mocks dependencies. <strong>Integration</strong>: tests how multiple modules work together. <strong>E2E</strong>: tests the full system from the user's perspective (often via browser automation).</p></div></details>
+
+<details class="qa"><summary>What's TDD?</summary>
+<div class="qa-body"><p>Test-Driven Development: write a failing test first, write the minimum code to pass, then refactor. The "red-green-refactor" cycle.</p></div></details>
+
+<details class="qa"><summary>What's a mock?</summary>
+<div class="qa-body"><p>A fake object that mimics a real dependency in tests — lets you isolate the unit under test and verify how it interacts with collaborators.</p></div></details>
+`;
+</script>
+
+<script>
+// ============ PAGE: BEHAVIORAL ============
+CONTENT.behavioral = `
+<h1>Behavioral Questions</h1>
+<p class="lead">"Tell me about a time when..." Use the <strong>STAR</strong> method: Situation, Task, Action, Result.</p>
+
+<div class="banner">
+<h3 style="margin-top:0">STAR Method</h3>
+<ul>
+<li><strong>S — Situation</strong>: what was the context?</li>
+<li><strong>T — Task</strong>: what were you responsible for?</li>
+<li><strong>A — Action</strong>: what specifically did <em>you</em> do?</li>
+<li><strong>R — Result</strong>: what happened? Quantify if possible.</li>
+</ul>
+</div>
+
+<h2>Common questions &amp; how to answer</h2>
+
+<details class="qa"><summary>Tell me about yourself.</summary>
+<div class="qa-body"><p>Keep it to ~90 seconds. Structure: <strong>(1) Who you are today</strong> — "I'm a final-year IT student at UoM" <strong>(2) What you've built</strong> — "I worked on a gemstone classification system using React and Python" <strong>(3) What you're looking for</strong> — "I'm looking for a backend role where I can grow my skills in distributed systems."</p>
+<p>Don't recite your CV. Tell a short story.</p>
+</div></details>
+
+<details class="qa"><summary>Why do you want to work here?</summary>
+<div class="qa-body"><p>Show you've researched them. Mention: a product/team you find interesting, a tech they use, their engineering culture, recent news. Avoid: salary, "to learn" alone, generic "you're a great company."</p></div></details>
+
+<details class="qa"><summary>Tell me about a project you're proud of.</summary>
+<div class="qa-body"><p>Pick a project where YOU made a meaningful contribution. Cover: problem, your specific role, tech choices and why, a real challenge you solved, the outcome.</p></div></details>
+
+<details class="qa"><summary>Tell me about a time you had a conflict with a teammate.</summary>
+<div class="qa-body"><p>Focus on resolution, not blame. Example: "We disagreed on whether to use REST or GraphQL. We listed our requirements, prototyped both for a day, and picked GraphQL because it solved over-fetching for our mobile client. I learned that disagreements often come from missing context — making it concrete helped."</p></div></details>
+
+<details class="qa"><summary>Tell me about a time you failed.</summary>
+<div class="qa-body"><p>Pick a real failure (not a humblebrag). Show: what went wrong, what you learned, what you do differently now. Example: "I once pushed to main without testing because I thought a one-line change was safe. It broke a production dashboard. Since then I always run tests locally and use PRs even for tiny changes."</p></div></details>
+
+<details class="qa"><summary>How do you handle pressure or tight deadlines?</summary>
+<div class="qa-body"><p>Give a specific example. Cover: how you prioritized, what you cut, who you communicated with, the outcome.</p></div></details>
+
+<details class="qa"><summary>Tell me about a time you took feedback.</summary>
+<div class="qa-body"><p>Show you take criticism without defensiveness. Example: "In code review my mentor pointed out my functions were too long. At first I disagreed, but I tried splitting them and the tests got way easier to write. Now I aim for one job per function."</p></div></details>
+
+<details class="qa"><summary>Where do you see yourself in 5 years?</summary>
+<div class="qa-body"><p>Show ambition but realism. Example: "I'd like to grow from junior to mid-level engineer, get deep in one area like backend or distributed systems, and ideally start mentoring interns."</p></div></details>
+
+<details class="qa"><summary>What's your biggest weakness?</summary>
+<div class="qa-body"><p>Pick a real but bounded weakness AND show how you're addressing it. Avoid clichés like "I'm a perfectionist". Example: "I sometimes go too deep into one task and lose track of others. I've started using a daily todo list to keep me honest about priorities."</p></div></details>
+
+<details class="qa"><summary>Why are you leaving your current role? / Why are you looking?</summary>
+<div class="qa-body"><p>Stay positive. Focus on what you're moving TOWARDS, not running from. "I want exposure to a larger codebase / more senior engineers / a different domain / production scale."</p></div></details>
+
+<details class="qa"><summary>How do you learn a new technology?</summary>
+<div class="qa-body"><p>Concrete process: read docs/quick start → build a tiny project → read others' code → ask questions / read source. Mention a recent example.</p></div></details>
+
+<details class="qa"><summary>Tell me about a time you led something.</summary>
+<div class="qa-body"><p>Leadership doesn't require a title. Examples: drove a code refactor, organized a study group, took ownership of a flaky test suite, mentored a junior.</p></div></details>
+
+<h2>Questions YOU should ask them</h2>
+<p>Always have 3-5 ready. Choose 2-3 based on time.</p>
+<ul>
+  <li>What does a typical day look like for someone in this role?</li>
+  <li>What's the biggest challenge the team is facing right now?</li>
+  <li>How do you measure success in this position in the first 6 months?</li>
+  <li>How does your team approach code review?</li>
+  <li>How is testing done — unit, integration, manual?</li>
+  <li>What does the onboarding look like?</li>
+  <li>What's the team's tech stack? Any plans to change it?</li>
+  <li>How do you balance shipping fast vs. paying down tech debt?</li>
+  <li>What do you enjoy most about working here?</li>
+</ul>
+
+<div class="tip">💡 Asking thoughtful questions shows real interest. Avoid asking about salary, benefits, or remote policy in the first round — save that for HR.</div>
+
+<h2>Day-before checklist</h2>
+<ul>
+  <li>Re-read the job description</li>
+  <li>Review your CV — be ready to talk about every line</li>
+  <li>Look up your interviewers on LinkedIn</li>
+  <li>Prepare 2 STAR stories you can adapt to many questions</li>
+  <li>Prepare 3-5 questions to ask them</li>
+  <li>Test your camera, mic, and internet (if remote)</li>
+  <li>Sleep well — fatigue kills problem-solving</li>
+</ul>
+
+<div class="banner">
+<h3 style="margin-top:0">During the interview</h3>
+<ul>
+<li>Smile, breathe, take 2 seconds before answering</li>
+<li>"That's a great question — let me think for a moment" is fine</li>
+<li>If you don't know, say so honestly — but then say what you'd try</li>
+<li>Be specific. "I improved X by 30%" beats "I worked on optimization"</li>
+<li>Be enthusiastic about the role — even small enthusiasm reads big</li>
+</ul>
+</div>
+`;
+</script>
+
+<script>
+// ============ ROUTER & UI ============
+const TOP_NAV = document.getElementById("topnav");
+const MAIN = document.getElementById("main");
+const SB = document.getElementById("sidebar-links");
+
+for (const key in PAGES){
+  const btn = document.createElement("button");
+  btn.textContent = PAGES[key].icon + " " + PAGES[key].title;
+  btn.dataset.key = key;
+  btn.onclick = () => navigate(key);
+  TOP_NAV.appendChild(btn);
+}
+
+function navigate(key){
+  if (!CONTENT[key]) key = "home";
+  location.hash = key;
+  MAIN.innerHTML = `<div class="page active">${CONTENT[key]}</div>`;
+  document.querySelectorAll("#topnav button").forEach(b => {
+    b.classList.toggle("active", b.dataset.key === key);
+  });
+  buildSidebar();
+  attachQuizHandlers();
+  attachCopy();
+  window.scrollTo({top:0, behavior:"smooth"});
+  // Page-specific bootstrapping
+  if (key === "arrays") arrReset();
+  if (key === "linkedlist") llReset();
+  if (key === "stackqueue"){ stkReset(); qReset(); }
+  if (key === "trees") bstReset();
+  if (key === "sorting") sortGen();
+}
+
+function buildSidebar(){
+  SB.innerHTML = "";
+  const h2s = MAIN.querySelectorAll("h2");
+  h2s.forEach((h, i) => {
+    const id = "h-" + i;
+    h.id = id;
+    const a = document.createElement("a");
+    a.href = "#" + id;
+    a.textContent = h.textContent;
+    a.onclick = (e) => {
+      e.preventDefault();
+      document.getElementById(id).scrollIntoView({behavior:"smooth", block:"start"});
+      SB.querySelectorAll("a").forEach(x => x.classList.remove("active"));
+      a.classList.add("active");
+    };
+    SB.appendChild(a);
+  });
+}
+
+function attachQuizHandlers(){
+  document.querySelectorAll(".quiz").forEach(q => {
+    const correct = parseInt(q.dataset.correct, 10);
+    q.querySelectorAll(".opt").forEach((opt, i) => {
+      opt.onclick = () => {
+        if (q.classList.contains("answered")) return;
+        q.classList.add("answered");
+        q.querySelectorAll(".opt").forEach((o, j) => {
+          if (j === correct) o.classList.add("correct");
+          else if (j === i) o.classList.add("wrong");
+        });
+      };
+    });
+  });
+}
+
+function attachCopy(){
+  document.querySelectorAll("pre").forEach(pre => {
+    if (pre.querySelector(".copy")) return;
+    const btn = document.createElement("button");
+    btn.className = "copy";
+    btn.textContent = "Copy";
+    btn.onclick = () => {
+      navigator.clipboard.writeText(pre.querySelector("code").textContent);
+      btn.textContent = "Copied!";
+      setTimeout(() => btn.textContent = "Copy", 1500);
+    };
+    pre.appendChild(btn);
+  });
+}
+
+function toggleTheme(){
+  const cur = document.body.dataset.theme;
+  document.body.dataset.theme = cur === "light" ? "" : "light";
+}
+
+function showRandomQ(){
+  const all = document.querySelectorAll(".qa");
+  if (!all.length){
+    const keys = Object.keys(PAGES).filter(k => !["home","behavioral"].includes(k));
+    navigate(keys[Math.floor(Math.random() * keys.length)]);
+    setTimeout(showRandomQ, 100);
+    return;
+  }
+  const q = all[Math.floor(Math.random() * all.length)];
+  all.forEach(x => x.removeAttribute("open"));
+  q.setAttribute("open", "");
+  q.scrollIntoView({behavior:"smooth", block:"center"});
+}
+
+// ============ CODE RUNNER ============
+function runCode(srcId, outId){
+  const src = document.getElementById(srcId).value;
+  const out = document.getElementById(outId);
+  out.textContent = "";
+  const orig = console.log, ot = console.time, oe = console.timeEnd;
+  const timers = {};
+  console.log = (...args) => {
+    out.textContent += args.map(a => typeof a === "object" ? JSON.stringify(a, null, 2) : String(a)).join(" ") + "\n";
+  };
+  console.time = (l) => { timers[l] = performance.now(); };
+  console.timeEnd = (l) => {
+    out.textContent += `${l}: ${(performance.now() - timers[l]).toFixed(2)}ms\n`;
+  };
+  try {
+    new Function(src)();
+  } catch (e){
+    out.textContent += "❌ Error: " + e.message;
+  } finally {
+    console.log = orig; console.time = ot; console.timeEnd = oe;
+  }
+}
+
+// ============ ARRAY VIZ ============
+let arrState = [];
+function arrRender(opName){
+  const v = document.getElementById("arr-viz");
+  if (!v) return;
+  v.innerHTML = "";
+  arrState.forEach((x, i) => {
+    const c = document.createElement("div");
+    c.className = "cell";
+    c.innerHTML = `${x}<span class="idx">[${i}]</span>`;
+    v.appendChild(c);
+  });
+  const op = document.getElementById("arr-op");
+  if (op) op.textContent = opName || "—";
+}
+function arrPush(){ const v = document.getElementById("arr-val").value || Math.floor(Math.random()*99); arrState.push(v); arrRender(`push(${v})`); }
+function arrPop(){ const v = arrState.pop(); arrRender(`pop() → ${v ?? "undefined"}`); }
+function arrUnshift(){ const v = document.getElementById("arr-val").value || Math.floor(Math.random()*99); arrState.unshift(v); arrRender(`unshift(${v}) — O(n) shift`); }
+function arrShift(){ const v = arrState.shift(); arrRender(`shift() → ${v ?? "undefined"} — O(n) shift`); }
+function arrReverse(){ arrState.reverse(); arrRender("reverse()"); }
+function arrSort(){ arrState.sort((a,b) => a-b); arrRender("sort()"); }
+function arrReset(){ arrState = [3, 1, 4, 1, 5, 9, 2, 6]; arrRender("reset"); }
+
+// ============ LINKED LIST VIZ ============
+let llState = [];
+function llRender(){
+  const v = document.getElementById("ll-viz");
+  if (!v) return;
+  v.innerHTML = "";
+  llState.forEach((x, i) => {
+    const c = document.createElement("div");
+    c.className = "cell";
+    c.style.minWidth = "60px";
+    c.innerHTML = `${x}`;
+    v.appendChild(c);
+    if (i < llState.length - 1){
+      const a = document.createElement("div");
+      a.innerHTML = "→";
+      a.style.color = "var(--accent)";
+      a.style.fontSize = "20px";
+      v.appendChild(a);
+    }
+  });
+  if (llState.length){
+    const n = document.createElement("div");
+    n.innerHTML = "→ null";
+    n.style.color = "var(--muted)";
+    n.style.fontSize = "13px";
+    v.appendChild(n);
+  } else {
+    v.innerHTML = "<span style='color:var(--muted)'>empty list</span>";
+  }
+}
+function llAddHead(){ const v = document.getElementById("ll-val").value || Math.floor(Math.random()*99); llState.unshift(v); llRender(); }
+function llAddTail(){ const v = document.getElementById("ll-val").value || Math.floor(Math.random()*99); llState.push(v); llRender(); }
+function llRemoveHead(){ llState.shift(); llRender(); }
+function llReverse(){ llState.reverse(); llRender(); }
+function llReset(){ llState = ["A", "B", "C"]; llRender(); }
+
+// ============ STACK VIZ ============
+let stkState = [];
+function stkRender(){
+  const v = document.getElementById("stk-viz");
+  if (!v) return;
+  v.innerHTML = "";
+  stkState.forEach((x, i) => {
+    const c = document.createElement("div");
+    c.className = "cell";
+    c.style.width = "80px";
+    if (i === stkState.length - 1){ c.classList.add("hi"); }
+    c.textContent = x + (i === stkState.length - 1 ? " ← top" : "");
+    v.appendChild(c);
+  });
+  if (!stkState.length) v.innerHTML = "<span style='color:var(--muted)'>empty stack</span>";
+}
+function stkPush(){ const v = document.getElementById("stk-val").value || Math.floor(Math.random()*99); stkState.push(v); stkRender(); }
+function stkPop(){ stkState.pop(); stkRender(); }
+function stkReset(){ stkState = ["A","B","C"]; stkRender(); }
+
+// ============ QUEUE VIZ ============
+let qState = [];
+function qRender(){
+  const v = document.getElementById("q-viz");
+  if (!v) return;
+  v.innerHTML = "";
+  qState.forEach((x, i) => {
+    const c = document.createElement("div");
+    c.className = "cell";
+    if (i === 0) c.classList.add("hi");
+    if (i === qState.length - 1) c.classList.add("ok");
+    c.textContent = x;
+    v.appendChild(c);
+  });
+  if (!qState.length) v.innerHTML = "<span style='color:var(--muted)'>empty queue</span>";
+}
+function qEnqueue(){ const v = document.getElementById("q-val").value || Math.floor(Math.random()*99); qState.push(v); qRender(); }
+function qDequeue(){ qState.shift(); qRender(); }
+function qReset(){ qState = ["A","B","C"]; qRender(); }
+
+// ============ BST VIZ ============
+let bstRoot = null;
+function bstInsertNode(node, v){
+  if (!node) return { value: v, left: null, right: null };
+  if (v < node.value) node.left = bstInsertNode(node.left, v);
+  else if (v > node.value) node.right = bstInsertNode(node.right, v);
+  return node;
+}
+function bstInsert(){
+  const v = parseInt(document.getElementById("bst-val").value, 10);
+  if (isNaN(v)) return;
+  bstRoot = bstInsertNode(bstRoot, v);
+  bstDraw();
+}
+function bstInorder(){
+  const out = [];
+  (function go(n){ if (!n) return; go(n.left); out.push(n.value); go(n.right); })(bstRoot);
+  document.getElementById("bst-trav").textContent = out.join(" → ");
+}
+function bstReset(){ bstRoot = null; [50, 30, 70, 20, 40, 60, 80, 10, 35].forEach(v => bstRoot = bstInsertNode(bstRoot, v)); bstDraw(); }
+function bstDraw(){
+  const svg = document.getElementById("bst-svg");
+  if (!svg) return;
+  svg.innerHTML = "";
+  if (!bstRoot) return;
+  function getDepth(n){ if (!n) return 0; return 1 + Math.max(getDepth(n.left), getDepth(n.right)); }
+  const depth = getDepth(bstRoot);
+  const W = 600, levelH = 50;
+  function draw(node, x, y, dx){
+    if (!node) return;
+    if (node.left){
+      const lx = x - dx, ly = y + levelH;
+      svg.innerHTML += `<line x1="${x}" y1="${y}" x2="${lx}" y2="${ly}" stroke="#7c5cff" stroke-width="1.5"/>`;
+      draw(node.left, lx, ly, dx/2);
+    }
+    if (node.right){
+      const rx = x + dx, ry = y + levelH;
+      svg.innerHTML += `<line x1="${x}" y1="${y}" x2="${rx}" y2="${ry}" stroke="#7c5cff" stroke-width="1.5"/>`;
+      draw(node.right, rx, ry, dx/2);
+    }
+    svg.innerHTML += `<circle cx="${x}" cy="${y}" r="18" fill="#7c5cff" stroke="#fff" stroke-width="2"/>
+                      <text x="${x}" y="${y+5}" text-anchor="middle" fill="white" font-weight="700" font-size="12">${node.value}</text>`;
+  }
+  draw(bstRoot, W/2, 30, W/4);
+}
+
+// ============ SORT VIZ ============
+let sortArr = [];
+function sortGen(){
+  sortArr = Array.from({length: 40}, () => Math.floor(Math.random()*100) + 5);
+  sortDraw();
+}
+function sortDraw(hi=[]){
+  const v = document.getElementById("sort-viz");
+  if (!v) return;
+  v.innerHTML = "";
+  const max = Math.max(...sortArr);
+  sortArr.forEach((x, i) => {
+    const b = document.createElement("div");
+    b.style.width = "12px";
+    b.style.height = `${(x/max)*150}px`;
+    b.style.background = hi.includes(i) ? "var(--accent2)" : "var(--accent)";
+    b.style.borderRadius = "2px";
+    v.appendChild(b);
+  });
+}
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+async function sortRun(algo){
+  if (algo === "bubble"){
+    for (let i=0; i<sortArr.length; i++){
+      for (let j=0; j<sortArr.length-1-i; j++){
+        if (sortArr[j] > sortArr[j+1]){
+          [sortArr[j], sortArr[j+1]] = [sortArr[j+1], sortArr[j]];
+        }
+        sortDraw([j, j+1]);
+        await sleep(8);
+      }
+    }
+  } else if (algo === "insertion"){
+    for (let i=1; i<sortArr.length; i++){
+      const cur = sortArr[i];
+      let j = i - 1;
+      while (j >= 0 && sortArr[j] > cur){
+        sortArr[j+1] = sortArr[j]; j--;
+        sortDraw([j+1, i]);
+        await sleep(8);
+      }
+      sortArr[j+1] = cur;
+    }
+  } else if (algo === "selection"){
+    for (let i=0; i<sortArr.length; i++){
+      let min = i;
+      for (let j=i+1; j<sortArr.length; j++){
+        if (sortArr[j] < sortArr[min]) min = j;
+        sortDraw([i, j, min]); await sleep(4);
+      }
+      [sortArr[i], sortArr[min]] = [sortArr[min], sortArr[i]];
+    }
+  } else if (algo === "quick"){
+    async function qs(lo, hi){
+      if (lo >= hi) return;
+      const pivot = sortArr[hi];
+      let i = lo;
+      for (let j=lo; j<hi; j++){
+        if (sortArr[j] < pivot){
+          [sortArr[i], sortArr[j]] = [sortArr[j], sortArr[i]];
+          i++;
+        }
+        sortDraw([i, j, hi]);
+        await sleep(8);
+      }
+      [sortArr[i], sortArr[hi]] = [sortArr[hi], sortArr[i]];
+      await qs(lo, i-1);
+      await qs(i+1, hi);
+    }
+    await qs(0, sortArr.length - 1);
+  }
+  sortDraw();
+}
+
+// ============ KEYBOARD ============
+document.addEventListener("keydown", e => {
+  if (e.key === "/" && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA"){
+    e.preventDefault();
+    // focus first input on page if any
+    const inp = document.querySelector("main input[type='text'],main input[type='number']");
+    if (inp) inp.focus();
+  }
+});
+
+// ============ INIT ============
+const start = (location.hash || "#home").slice(1);
+navigate(start in PAGES ? start : "home");
+window.addEventListener("hashchange", () => navigate(location.hash.slice(1) || "home"));
+</script>
+</body>
+</html>
