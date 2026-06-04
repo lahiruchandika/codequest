@@ -3,10 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="build" content="1780567623">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>CodeQuest — SE Interview Prep</title>
+<script>
+// Auto-update check — quietly reloads when a newer build is detected on the server
+(function(){
+  try {
+    if (location.search.indexOf('_=') !== -1){
+      history.replaceState(null, '', location.pathname + location.hash);
+    }
+    var meta = document.querySelector('meta[name="build"]');
+    var current = meta ? meta.content : '';
+    if (!current) return;
+    if (sessionStorage.getItem('cq_build_seen') === current) return;
+    fetch(location.pathname + '?_=' + Date.now(), {cache: 'no-store'})
+      .then(function(r){ return r.text(); })
+      .then(function(html){
+        var m = html.match(/<meta name="build" content="([^"]+)">/);
+        if (m && m[1] && m[1] !== current){
+          sessionStorage.setItem('cq_build_seen', m[1]);
+          location.replace(location.pathname + '?_=' + m[1] + location.hash);
+        } else {
+          sessionStorage.setItem('cq_build_seen', current);
+        }
+      })
+      .catch(function(){});
+  } catch(e){}
+})();
+</script>
 <style>
 :root{
   --bg:#0f1115; --panel:#171a21; --panel2:#1d212b; --border:#2a2f3a;
