@@ -198,7 +198,7 @@ footer{text-align:center;padding:30px;color:var(--muted);font-size:13px;border-t
 
 <header>
   <div class="hwrap">
-    <div class="logo">&lt;/&gt; CodeQuest</div>
+    <a href="#home" class="logo" id="logo" style="cursor:pointer;text-decoration:none;color:inherit">&lt;/&gt; CodeQuest</a>
     <nav class="topnav" id="topnav"></nav>
     <button class="hamburger" id="hamburger" aria-label="Open menu">☰</button>
       <div class="toolbar">
@@ -214,6 +214,54 @@ footer{text-align:center;padding:30px;color:var(--muted);font-size:13px;border-t
   <h4>Topics</h4>
   <div id="drawer-nav"></div>
 </aside>
+
+<script>
+// Early inline drawer setup — runs immediately, independent of the big content scripts below
+(function(){
+  function openDrawer(){
+    var d = document.getElementById("drawer");
+    var bg = document.getElementById("drawer-bg");
+    if (d){ d.classList.add("open"); d.setAttribute("aria-hidden", "false"); }
+    if (bg) bg.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeDrawer(){
+    var d = document.getElementById("drawer");
+    var bg = document.getElementById("drawer-bg");
+    if (d){ d.classList.remove("open"); d.setAttribute("aria-hidden", "true"); }
+    if (bg) bg.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  window.openDrawer = openDrawer;
+  window.closeDrawer = closeDrawer;
+
+  function bind(){
+    var h = document.getElementById("hamburger");
+    var bg = document.getElementById("drawer-bg");
+    var c = document.getElementById("drawer-close");
+    var logo = document.getElementById("logo");
+    if (h && !h.dataset.bound){
+      h.dataset.bound = "1";
+      h.addEventListener("click", function(e){ e.preventDefault(); openDrawer(); });
+    }
+    if (bg && !bg.dataset.bound){ bg.dataset.bound = "1"; bg.addEventListener("click", closeDrawer); }
+    if (c && !c.dataset.bound){ c.dataset.bound = "1"; c.addEventListener("click", closeDrawer); }
+    if (logo && !logo.dataset.bound){
+      logo.dataset.bound = "1";
+      logo.addEventListener("click", function(e){
+        e.preventDefault();
+        if (typeof navigate === "function") navigate("home");
+        else location.hash = "home";
+        closeDrawer();
+        window.scrollTo({top:0, behavior:"smooth"});
+      });
+    }
+  }
+  bind();
+  document.addEventListener("DOMContentLoaded", bind);
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape") closeDrawer(); });
+})();
+</script>
 
 
 <div class="layout">
@@ -3286,36 +3334,17 @@ function renderTopicGrid(){
 }
 
 // ============ DRAWER / MOBILE NAV ============
-const DRAWER = document.getElementById("drawer");
-const DRAWER_BG = document.getElementById("drawer-bg");
-const DRAWER_NAV = document.getElementById("drawer-nav");
-function openDrawer(){
-  DRAWER.classList.add("open");
-  DRAWER_BG.classList.add("open");
-  DRAWER.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-}
-function closeDrawer(){
-  DRAWER.classList.remove("open");
-  DRAWER_BG.classList.remove("open");
-  DRAWER.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-}
-const HAMBURGER = document.getElementById("hamburger");
-const DRAWER_CLOSE = document.getElementById("drawer-close");
-if (HAMBURGER) HAMBURGER.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); openDrawer(); });
-if (DRAWER_CLOSE) DRAWER_CLOSE.addEventListener("click", closeDrawer);
-if (DRAWER_BG) DRAWER_BG.addEventListener("click", closeDrawer);
-document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
-
-// populate drawer with same topics
-for (const key in PAGES){
-  const btn = document.createElement("button");
-  btn.className = "nav";
-  btn.textContent = PAGES[key].icon + " " + PAGES[key].title;
-  btn.dataset.key = key;
-  btn.onclick = () => { navigate(key); closeDrawer(); };
-  DRAWER_NAV.appendChild(btn);
+// populate drawer (click handlers were attached by the inline script after the drawer markup)
+const DRAWER_NAV2 = document.getElementById("drawer-nav");
+if (DRAWER_NAV2 && !DRAWER_NAV2.hasChildNodes()){
+  for (const key in PAGES){
+    const btn = document.createElement("button");
+    btn.className = "nav";
+    btn.textContent = PAGES[key].icon + " " + PAGES[key].title;
+    btn.dataset.key = key;
+    btn.onclick = () => { navigate(key); window.closeDrawer && window.closeDrawer(); };
+    DRAWER_NAV2.appendChild(btn);
+  }
 }
 
 // ============ INIT ============
